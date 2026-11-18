@@ -30,6 +30,12 @@ body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--
 .seg button b { display: block; color: var(--ink); font-size: 13px; margin-bottom: 1px; }
 .seg button.on { border-color: var(--acc); box-shadow: 0 0 0 1px var(--acc); }
 .fake { margin-top: 18px; font-size: 12px; color: var(--muted); }
+.combo { margin: 6px 0 4px; padding: 12px; border-radius: 12px; background: var(--surf); border: 1px solid var(--line); }
+.combo .sum { font-size: 13px; line-height: 1.5; color: var(--soft); margin-bottom: 10px; }
+.combo .sum b { color: var(--ink); }
+.combo button { width: 100%; padding: 10px 12px; border-radius: 10px; border: 0; background: var(--acc); color: #fff; font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; }
+body[data-theme="nuit"] .combo button { color: #0b1220; }
+.combo .hint { margin-top: 8px; font-size: 12px; color: var(--muted); line-height: 1.45; }
 
 /* panel */
 .panel { width: 400px; height: 780px; display: flex; flex-direction: column; background: var(--paper); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 18px 48px rgba(0,0,0,.16); }
@@ -158,6 +164,7 @@ body[data-theme="nuit"] { color-scheme: dark; }
         <div class="ctl"><h3>Couleurs</h3><div class="swatches" id="themes"></div></div>
         <div class="ctl"><h3>Format</h3><div class="seg" id="formats"></div></div>
         <div class="ctl"><h3>Ce que le panneau fait</h3><div class="seg" id="modes"></div></div>
+        <div class="combo"><div class="sum" id="combo-sum"></div><button id="combo-copy">Copier ma combinaison</button><div class="hint" id="combo-hint">Collez-la ensuite dans un texto ou un courriel à Marco.</div></div>
         <div class="fake">Aperçu interactif — données fictives, aucun vrai client.</div>
     </div>
     <div class="panel" id="panel"></div>
@@ -229,7 +236,7 @@ const PEOPLE = [{ name: "Tremblay-Gagnon, Julie", data: JSON.parse(JSON.stringif
 const KEPT = new WeakSet();
 const st = { theme: "sarcelle", format: "list", mode: 2, who: 0, tab: 0, view: { type: "menu" }, q: "", open: new Set(), showNone: new Set(), income: false, help: true };
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
-const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const kind = (row) => { const [, v, b] = row; if (!v) return "none"; if (st.mode === 1) return "plain"; if (KEPT.has(row)) return "kept"; return b === v ? "same" : b === "" ? "empty" : "diff"; };
 const isTodo = (row) => ["diff", "empty"].includes(kind(row));
 const panel = document.getElementById("panel");
@@ -240,7 +247,20 @@ function controls() {
     THEMES.forEach(([id, name, c]) => { const b = el("button", "sw" + (st.theme === id ? " on" : "")); const i = el("i"); i.style.background = c; b.append(i, name); b.onclick = () => { st.theme = id; document.body.dataset.theme = id; controls(); }; th.append(b); });
     const seg = (host, items, key) => { const h = document.getElementById(host); h.replaceChildren(); items.forEach(([id, name, desc]) => { const b = el("button", st[key] === id ? "on" : ""); b.append(el("b", "", name), desc); b.onclick = () => { st[key] = id; controls(); render(); }; h.append(b); }); };
     seg("formats", FORMATS, "format"); seg("modes", MODES, "mode");
+    const [c, f, m] = comboParts(); const sum = document.getElementById("combo-sum"); sum.replaceChildren("Votre choix : couleur ", el("b", "", c), ", format ", el("b", "", f), ", mode ", el("b", "", m), ".");
 }
+function comboParts() { return [THEMES.find((x) => x[0] === st.theme)[1], FORMATS.find((x) => x[0] === st.format)[1], MODES.find((x) => x[0] === st.mode)[1]]; }
+function comboText() { const [c, f, m] = comboParts(); return "Mon choix pour le panneau LeClasseur : couleur " + c + ", format " + f + ", mode " + m + "."; }
+function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    return new Promise((ok, ko) => { const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.append(ta); ta.select(); const done = document.execCommand("copy"); ta.remove(); done ? ok() : ko(); });
+}
+document.getElementById("combo-copy").onclick = () => {
+    const b = document.getElementById("combo-copy"), h = document.getElementById("combo-hint"), text = comboText();
+    copyText(text).then(() => { b.textContent = "Copié ✓"; h.textContent = "C'est copié. Collez-le dans un texto ou un courriel à Marco."; },
+        () => { b.textContent = "Copier ma combinaison"; h.textContent = "Copiez ce texte à la main : " + text; })
+        .finally(() => setTimeout(() => (b.textContent = "Copier ma combinaison"), 1800));
+};
 function copyBtn(value) { const b = el("button", "btn", "Copier"); b.onclick = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(value).catch(() => {}); b.textContent = "Copié"; setTimeout(() => (b.textContent = "Copier"), 1200); }; return b; }
 function labelText(node, label) { const i = st.q ? norm(label).indexOf(st.q) : -1; if (i < 0) node.append(label); else node.append(label.slice(0, i), el("mark", "", label.slice(i, i + st.q.length)), label.slice(i + st.q.length)); return node; }
 function renderRow(row, sec) {
