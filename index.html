@@ -251,9 +251,12 @@ function controls() {
 }
 function comboParts() { return [THEMES.find((x) => x[0] === st.theme)[1], FORMATS.find((x) => x[0] === st.format)[1], MODES.find((x) => x[0] === st.mode)[1]]; }
 function comboText() { const [c, f, m] = comboParts(); return "Mon choix pour le panneau LeClasseur : couleur " + c + ", format " + f + ", mode " + m + "."; }
+function legacyCopy(text) {
+    return new Promise((ok, ko) => { const ta = document.createElement("textarea"); ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.append(ta); ta.select(); let done = false; try { done = document.execCommand("copy"); } catch (e) {} ta.remove(); done ? ok() : ko(); });
+}
 function copyText(text) {
-    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
-    return new Promise((ok, ko) => { const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.append(ta); ta.select(); const done = document.execCommand("copy"); ta.remove(); done ? ok() : ko(); });
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).catch(() => legacyCopy(text));
+    return legacyCopy(text);
 }
 document.getElementById("combo-copy").onclick = () => {
     const b = document.getElementById("combo-copy"), h = document.getElementById("combo-hint"), text = comboText();
