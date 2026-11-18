@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LeClasseur — Panneau BOSS (aperçu)</title>
+<style>
+body[data-theme="sarcelle"] { --hd1:#0b3f47; --hd2:#146874; --acc:#146874; --bg:#dfe6e4; --paper:#f3f6f5; --surf:#fff; --ink:#10201f; --soft:#40524f; --muted:#7d8d8a; --line:#e6ecea; --zebra:#f4f8f7; --diff:#b86e00; --good:#1f9d66; }
+body[data-theme="marine"]   { --hd1:#12263f; --hd2:#1f4e79; --acc:#0a7fc0; --bg:#dde4ec; --paper:#f2f5f9; --surf:#fff; --ink:#13202f; --soft:#3d4b5c; --muted:#7a8796; --line:#e3e9f0; --zebra:#f3f7fb; --diff:#c2410c; --good:#15803d; }
+body[data-theme="ardoise"]  { --hd1:#1e293b; --hd2:#334155; --acc:#4f46e5; --bg:#e2e4e9; --paper:#f4f5f7; --surf:#fff; --ink:#111827; --soft:#374151; --muted:#6b7280; --line:#e5e7eb; --zebra:#f7f7f9; --diff:#d97706; --good:#059669; }
+body[data-theme="foret"]    { --hd1:#1d3b2f; --hd2:#2f5d47; --acc:#2f6b4f; --bg:#e3e7df; --paper:#f5f6f1; --surf:#fffefb; --ink:#1c2a22; --soft:#44524a; --muted:#7f8a82; --line:#e6e8e0; --zebra:#f6f7f1; --diff:#b45309; --good:#3f8f4f; }
+body[data-theme="sable"]    { --hd1:#5b3a29; --hd2:#8a5a3c; --acc:#9a5b34; --bg:#ebe4dc; --paper:#f8f4ef; --surf:#fffdfa; --ink:#2b211b; --soft:#5a4a3f; --muted:#8f8075; --line:#ece4da; --zebra:#faf6f0; --diff:#c2410c; --good:#4d7c0f; }
+body[data-theme="nuit"]     { --hd1:#0b1220; --hd2:#15233b; --acc:#38bdf8; --bg:#0b0f17; --paper:#111827; --surf:#172033; --ink:#e5edf7; --soft:#b6c2d3; --muted:#7c8aa0; --line:#24314a; --zebra:#1b2740; --diff:#f59e0b; --good:#34d399; }
+:root { --font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--ink); transition: background .25s; min-height: 100vh; }
+.wrap { display: flex; gap: 48px; justify-content: center; align-items: flex-start; padding: 36px 24px 48px; }
+.side { width: 330px; padding-top: 8px; }
+.side h1 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.01em; }
+.side .lead { margin: 0 0 22px; font-size: 14px; line-height: 1.5; color: var(--soft); }
+.ctl { margin-bottom: 20px; }
+.ctl h3 { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+.sw { display: flex; align-items: center; gap: 7px; padding: 6px 10px 6px 6px; border-radius: 999px; border: 1px solid var(--line); background: var(--surf); color: var(--soft); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.sw i { width: 18px; height: 18px; border-radius: 50%; }
+.sw.on { border-color: var(--acc); color: var(--ink); box-shadow: 0 0 0 1px var(--acc); }
+.seg { display: flex; flex-direction: column; gap: 6px; }
+.seg button { text-align: left; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surf); color: var(--soft); font: inherit; font-size: 13px; cursor: pointer; }
+.seg button b { display: block; color: var(--ink); font-size: 13px; margin-bottom: 1px; }
+.seg button.on { border-color: var(--acc); box-shadow: 0 0 0 1px var(--acc); }
+.fake { margin-top: 18px; font-size: 12px; color: var(--muted); }
+
+/* panel */
+.panel { width: 400px; height: 780px; display: flex; flex-direction: column; background: var(--paper); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 18px 48px rgba(0,0,0,.16); }
+.p-head { background: linear-gradient(135deg, var(--hd1), var(--hd2)); color: #fff; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+.logo { width: 22px; height: 22px; border-radius: 7px; background: rgba(255,255,255,.9); display: grid; place-items: center; color: var(--hd2); font-weight: 800; font-size: 12px; flex: 0 0 auto; }
+.p-head .deal { font-size: 12.5px; line-height: 1.3; opacity: .95; }
+.p-head .deal b { display: block; font-size: 13.5px; }
+.tabs { display: flex; background: var(--surf); border-bottom: 1px solid var(--line); }
+.tabs span { flex: 1; text-align: center; padding: 9px 0; font-size: 12.5px; font-weight: 600; color: var(--muted); cursor: pointer; }
+.tabs span.on { color: var(--acc); box-shadow: inset 0 -2px 0 var(--acc); }
+.tools { padding: 10px 12px 8px; display: flex; flex-direction: column; gap: 8px; }
+.pills { display: flex; gap: 6px; }
+.pill { padding: 5px 11px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--surf); border: 1px solid var(--line); color: var(--soft); cursor: pointer; }
+.pill.on { background: var(--acc); border-color: var(--acc); color: #fff; }
+body[data-theme="nuit"] .pill.on { color: #0b1220; }
+.search { width: 100%; font: inherit; font-size: 13px; padding: 8px 10px 8px 30px; border: 1px solid var(--line); border-radius: 9px; background: var(--surf); color: var(--ink); outline: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 9px center; background-size: 14px; }
+.search:focus { border-color: var(--acc); }
+.search::placeholder { color: var(--muted); }
+.body { flex: 1; overflow-y: auto; padding-bottom: 16px; }
+.help { margin: 2px 12px 8px; padding: 11px 12px; border-radius: 10px; background: var(--surf); border: 1px solid var(--line); font-size: 12.5px; color: var(--soft); line-height: 1.6; }
+.help b { color: var(--ink); }
+.help .x { display: block; text-align: right; color: var(--acc); font-weight: 600; cursor: pointer; margin-top: 2px; }
+.mk { display: inline-block; width: 7px; height: 7px; border-radius: 50%; vertical-align: middle; margin: 0 3px 1px; }
+.mk.d { background: var(--diff); } .mk.g { background: var(--good); } .mk.e { border: 1.5px solid var(--diff); }
+.todo-card { margin: 2px 12px 4px; padding: 11px 12px; border-radius: 10px; background: var(--surf); border: 1px solid var(--line); display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.todo-card .t { flex: 1; font-size: 13.5px; font-weight: 700; }
+.todo-card .n { font-size: 13px; font-weight: 700; color: var(--diff); }
+.group-label { margin: 14px 14px 5px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.list { margin: 0 12px; background: var(--surf); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.item { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.item:last-child { border-bottom: 0; }
+.item:hover, .todo-card:hover { background: var(--zebra); }
+.item .name { flex: 1; font-size: 13.5px; }
+.item .state { font-size: 12px; color: var(--muted); }
+.item .state.todo { color: var(--diff); font-weight: 600; }
+.item.empty .name { color: var(--muted); }
+.chev { color: var(--muted); opacity: .6; }
+.bar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: var(--paper); border-bottom: 1px solid var(--line); }
+.bar .back { font-size: 12.5px; font-weight: 600; color: var(--acc); cursor: pointer; white-space: nowrap; }
+.bar .title { flex: 1; text-align: center; font-size: 14px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar .nav { display: flex; gap: 4px; min-width: 56px; justify-content: flex-end; }
+.bar .nav span { width: 26px; height: 26px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 7px; background: var(--surf); color: var(--soft); cursor: pointer; font-size: 12px; }
+.bar .nav span.off { opacity: .35; pointer-events: none; }
+.rows { margin: 10px 12px 0; background: var(--surf); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.subhead { padding: 7px 12px; font-size: 11.5px; font-weight: 700; color: var(--muted); background: var(--zebra); border-bottom: 1px solid var(--line); cursor: pointer; }
+.colhead { display: none; }
+.rw { border-bottom: 1px solid var(--line); }
+.rw:last-child { border-bottom: 0; }
+.rw.alt { background: var(--zebra); }
+.row { display: flex; align-items: center; gap: 10px; padding: 8px 12px 8px 14px; min-height: 38px; }
+.lab { flex: 0 0 126px; font-size: 13px; color: var(--soft); line-height: 1.25; position: relative; cursor: pointer; }
+.row .lab::before { content: ""; position: absolute; left: -9px; top: 5px; width: 6px; height: 6px; border-radius: 50%; }
+.s-diff .lab::before { background: var(--diff); }
+.s-good .lab::before { background: var(--good); }
+.s-empty .lab::before { width: 7px; height: 7px; top: 4px; border: 1.5px solid var(--diff); box-sizing: border-box; }
+.vals { flex: 1; min-width: 0; cursor: pointer; }
+.val { font-size: 13px; font-weight: 600; overflow-wrap: anywhere; line-height: 1.25; }
+.val.none { color: var(--muted); font-weight: 400; }
+.was { font-size: 12px; color: var(--muted); text-decoration: line-through; overflow-wrap: anywhere; line-height: 1.2; margin-bottom: 1px; }
+.vide { display: inline-block; font-size: 11px; color: var(--muted); border: 1px dashed var(--muted); border-radius: 4px; padding: 0 6px; line-height: 15px; margin-bottom: 2px; opacity: .85; }
+.srcs { font-size: 11.5px; color: var(--acc); margin-top: 1px; }
+.ok { flex: 0 0 auto; color: var(--good); font-size: 13px; padding-right: 4px; opacity: .7; }
+.btn { flex: 0 0 auto; border: 1px solid var(--line); background: var(--surf); color: var(--soft); border-radius: 8px; font: inherit; font-size: 12px; font-weight: 600; padding: 4px 9px; cursor: pointer; white-space: nowrap; }
+.btn:hover { border-color: var(--acc); color: var(--acc); }
+.btn.go { border-color: var(--acc); color: var(--acc); }
+.btn.go:hover { background: var(--acc); color: #fff; }
+.detail { padding: 0 12px 10px 150px; font-size: 12px; color: var(--soft); line-height: 1.55; }
+.detail a { color: var(--acc); font-weight: 600; cursor: pointer; }
+.opt { cursor: pointer; padding: 1px 0; }
+.opt::before { content: "○ "; color: var(--muted); }
+.opt.on { color: var(--ink); font-weight: 600; }
+.opt.on::before { content: "● "; color: var(--acc); }
+.foot { margin: 8px 14px 0; display: flex; justify-content: space-between; font-size: 12px; }
+.foot span { color: var(--muted); cursor: pointer; }
+.foot span.act { color: var(--acc); font-weight: 600; }
+.income { margin: 10px 12px 0; padding: 10px 12px; background: var(--surf); border: 1px solid var(--line); border-radius: 10px; font-size: 13px; }
+.income .top { display: flex; align-items: baseline; gap: 8px; }
+.income .top b { flex: 1; }
+.income a { color: var(--acc); font-weight: 600; font-size: 12px; cursor: pointer; }
+.income .calc { margin-top: 8px; font-size: 12px; color: var(--soft); line-height: 1.6; }
+.hint { margin: 16px 14px; font-size: 13px; color: var(--muted); line-height: 1.5; }
+.helplink { margin: 14px 14px 0; font-size: 12px; color: var(--muted); cursor: pointer; }
+mark { background: color-mix(in srgb, var(--diff) 22%, transparent); color: inherit; border-radius: 3px; }
+
+/* format: compact */
+.f-compact .row { min-height: 30px; padding-top: 5px; padding-bottom: 5px; }
+.f-compact .lab, .f-compact .val { font-size: 12.5px; }
+.f-compact .lab { flex-basis: 118px; }
+.f-compact .btn { padding: 2px 8px; font-size: 11.5px; }
+.f-compact .item { padding: 8px 12px; }
+.f-compact .detail { padding-left: 140px; }
+/* format: empilé (case name above the value) */
+.f-stack .row { align-items: flex-end; }
+.f-stack .row .lab { display: none; }
+.f-stack .stacklab { display: block !important; font-size: 11.5px; color: var(--muted); margin-bottom: 2px; position: relative; }
+.f-stack .stacklab::before { content: ""; position: absolute; left: -9px; top: 4px; width: 6px; height: 6px; border-radius: 50%; }
+.f-stack .s-diff .stacklab::before { background: var(--diff); }
+.f-stack .s-good .stacklab::before { background: var(--good); }
+.f-stack .s-empty .stacklab::before { width: 7px; height: 7px; top: 3px; border: 1.5px solid var(--diff); box-sizing: border-box; }
+.f-stack .val { font-size: 14px; }
+.f-stack .detail { padding-left: 14px; }
+.stacklab { display: none; }
+/* format: deux colonnes (BOSS | LeClasseur) */
+.f-cols .colhead { display: flex; gap: 10px; padding: 7px 12px 7px 14px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); }
+.f-cols .colhead span:first-child { flex: 0 0 106px; }
+.f-cols .colhead span { flex: 1; }
+.f-cols .colhead span:last-child { flex: 0 0 62px; }
+.f-cols .lab { flex-basis: 106px; font-size: 12.5px; }
+.f-cols .vals { display: flex; gap: 10px; align-items: baseline; }
+.f-cols .vals > * { flex: 1; min-width: 0; }
+.f-cols .was { text-decoration: none; font-size: 12.5px; color: var(--soft); margin: 0; }
+.f-cols .vide { align-self: center; flex: 0 0 auto; margin: 0; }
+.f-cols .bosscell { flex: 1; min-width: 0; font-size: 12.5px; color: var(--soft); overflow-wrap: anywhere; }
+.f-cols .srcs { display: none; }
+.f-cols .detail { padding-left: 14px; }
+.f-cols .row > .btn, .f-cols .row > .ok { flex: 0 0 62px; text-align: center; padding-left: 0; padding-right: 0; }
+.body { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+body[data-theme="nuit"] { color-scheme: dark; }
+</style>
+</head>
+<body data-theme="sarcelle">
+<div class="wrap">
+    <div class="side">
+        <h1>Le panneau LeClasseur dans BOSS</h1>
+        <p class="lead">À côté de votre dossier BOSS, LeClasseur affiche ce qu'il a trouvé dans vos documents, rangé exactement comme le menu de BOSS. Vous voyez d'un coup d'œil ce qui manque ou ce qui ne concorde pas.</p>
+        <div class="ctl"><h3>Couleurs</h3><div class="swatches" id="themes"></div></div>
+        <div class="ctl"><h3>Format</h3><div class="seg" id="formats"></div></div>
+        <div class="ctl"><h3>Ce que le panneau fait</h3><div class="seg" id="modes"></div></div>
+        <div class="fake">Aperçu interactif — données fictives, aucun vrai client.</div>
+    </div>
+    <div class="panel" id="panel"></div>
+</div>
+<script>
+const GROUPS = [
+    { label: "Information Demandeur", sections: [
+        { name: "Détails", open: true, rows: [
+            ["Titre de politesse", "Mme", ""], ["Prénom", "Julie", "Julie"], ["Initiales", "", ""], ["Nom", "Tremblay-Gagnon", "Tremblay"], ["Suffixe", "", ""],
+            ["Date de naissance", "1988-04-12", "1988-04-12"], ["NAS", "000 000 000", ""], ["État civil", "Conjoint de fait", "Célibataire"], ["Conjoint", "", ""],
+            ["Numéro au travail", "450 555-0100", "450 555-0100"], ["Ext", "", ""], ["Numéro de fax", "", ""], ["Cellulaire", "514 555-0142", "514 555-0124"],
+            ["Courriel", "julie.exemple@courriel.test", "julie.exemple@courriel.test"], ["Sexe", "", ""], ["Mode de communication", "", ""],
+            ["Résident du Canada", "Oui", "Oui"], ["Statut de résidence", "", ""], ["Premier acheteur", "Oui", ""], ["Numéro résidentiel", "", ""],
+            ["Personnes à charge", "2", ""], ["Langue de préférence", "Français", "Français"] ] },
+        { name: "Identification", rows: [
+            ["Type", "Permis de conduire", ""], ["Pays", "Canada", ""], ["Province", "Québec", ""], ["Numéro", "T0000-000000-00", ""], ["Date d'expiration", "2029-04-12", ""] ] },
+        { name: "Adresse", open: true, rows: [
+            ["Type d'adresse", "Actuelle", "Actuelle"], ["Pays", "Canada", "Canada"], ["Unité", "", ""], ["Numéro de rue", "1234", "1234"], ["Nom de rue", "des Érables", "des Érables"],
+            ["Type de rue", "Rue", "Rue"], ["Direction de la rue", "", ""], ["Ville", "Longueuil", "Longueuil"], ["Province", "Québec", "Québec"], ["Code postal", "J4K 0A0", "J4K 0A1"],
+            ["Date de début", "2019-07-01", ""], ["Date de fin", "", ""], ["Statut", "Locataire", "Locataire"], ["Loyer", "1 350 $", ""],
+            ["Durée à cette adresse (an)", "7", ""], ["Durée à cette adresse (m)", "4", ""] ] },
+        { name: "Adresse Postale", rows: [ ["Pays", "", ""], ["Numéro de rue", "", ""], ["Nom de rue", "", ""], ["Ville", "", ""], ["Code postal", "", ""] ] },
+        { name: "Emplois", rows: [
+            ["Nom de l'employeur", "Clinique Exemple inc.", "Clinique Exemple"], ["Statut de l'emploi", "Temps plein", "Temps plein"], ["Travailleur autonome", "Non", "Non"],
+            ["Type d'entreprise", "", ""], ["Numéro de téléphone", "450 555-0100", ""], ["Revenu brut", "68 400 $", "64 800 $"], ["Titre du poste", "Hygiéniste dentaire", "Hygiéniste dentaire"],
+            ["Date de début", "2016-09-06", ""], ["Secteur d'industrie", "", ""], ["Type de revenu", "Salaire", "Salaire"], ["Fréquence des revenus", "Annuel", "Annuel"] ] },
+        { name: "Autres revenus", rows: [ ["Type de revenu", "Allocation familiale", ""], ["Description", "", ""], ["Fréquence des revenus", "Mensuel", ""], ["Montant", "433 $", ""] ] },
+        { name: "Actifs", rows: [ ["Catégorie d'actif", "CELI", "CELI"], ["Description", "Caisse Exemple", "Caisse Exemple"], ["Valeur de l'actif", "42 000 $", "42 000 $"], ["Mise de fonds", "40 000 $", "40 000 $"] ] },
+        { name: "Passifs", rows: [ ["Catégorie de passif", "Prêt auto", "Prêt auto"], ["Limite de crédit", "", ""], ["Solde", "11 250 $", "11 250 $"], ["Paiement", "385 $", "385 $"], ["Date d'échéance", "", ""] ] },
+        { name: "Faillites", rows: [ ["Montant de la dette", "", ""], ["Date déclarée", "", ""], ["Versement mensuel", "", ""], ["Date de libération", "", ""], ["Détails", "", ""] ] },
+        { name: "Propriétés détenues", rows: [
+            ["Utilisation de la propriété", "Locatif", "Locatif"], ["Propriété assujettie?", "Non", "Non"], ["Pays", "Canada", "Canada"], ["Unité", "", ""],
+            ["Numéro de rue", "55", "55"], ["Nom de rue", "Principale", "Principale"], ["Type de rue", "Rue", "Rue"], ["Direction de la rue", "", ""],
+            ["Ville", "Saint-Hubert", "Saint-Hubert"], ["Province", "Québec", "Québec"], ["Code postal", "J3Y 0C0", "J3Y 0C0"],
+            ["Valeur estimée", "310 000 $", "295 000 $"], ["Valeur initiale à l'achat", "240 000 $", ""], ["Date d'achat", "2018-06-01", ""],
+            ["Taxes municipales annuelles", "2 640 $", "2 640 $"], ["Taxes scolaires annuelles", "231 $", ""], ["Frais de condo", "", ""], ["Frais de chauffage", "", ""],
+            ["Revenus de location", "1 450 $", "1 450 $"], ["Assurances", "", ""],
+            ["Hypothèque 1 — Prêteur", "Caisse Exemple", "Caisse Exemple"], ["Hypothèque 1 — Solde", "182 300 $", "185 000 $"], ["Hypothèque 1 — Paiement", "1 012 $", "1 012 $"],
+            ["Hypothèque 1 — Taux d'intérêt", "4,89 %", ""], ["Hypothèque 1 — Date d'échéance", "2028-06-01", ""], ["Hypothèque 1 — Type de taux", "Fixe", "Fixe"] ] },
+    ] },
+    { label: "Propriété assujettie", sections: [
+        { name: "Informations propriété assujettie", rows: [
+            ["Utilisation de la propriété", "Propriétaire occupant", "Propriétaire occupant"], ["Unité#", "", ""], ["Numéro de rue", "88", "88"], ["Nom de rue", "du Parc", "du Parc"],
+            ["Type de rue", "Avenue", "Avenue"], ["Ville", "Brossard", "Brossard"], ["Province", "Québec", "Québec"], ["Code postal", "J4W 0B0", "J4W 0B0"],
+            ["Lot", "", ""], ["Cadastre", "", ""], ["Fiche MLS", "00000000", ""], ["Type d'immeuble", "Existante", "Existante"], ["Nombre d'unités", "1", "1"],
+            ["Catégorie de l'immeuble", "Détaché", ""], ["Style", "Deux étages", ""], ["Tenure", "", ""], ["Âge", "22", "22"], ["Superficie habitable", "1 480 pi²", ""],
+            ["Superficie du lot", "", ""], ["Chauffage", "Électrique", ""], ["Taxes municipales annuelles", "3 180 $", "3 810 $"], ["Taxes scolaires annuelles", "296 $", "296 $"], ["Frais de condo", "", ""] ] },
+        { name: "Mise de fonds", rows: [ ["Sélectionner la source", "Épargne", "Épargne"], ["Description", "", ""], ["Saisir le montant", "40 000 $", "40 000 $"] ] },
+        { name: "Renseignements sur l'hypothèque", rows: [
+            ["Type de demande", "Achat", "Achat"], ["Rénovations", "", ""], ["But de la demande", "", ""], ["Date de clôture", "2027-02-15", "2027-02-15"],
+            ["Prix d'achat", "400 000 $", "400 000 $"], ["Mise de fonds", "40 000 $", "40 000 $"], ["Valeur estimée", "405 000 $", ""], ["Valeur d'évaluation", "", ""],
+            ["1ère hypothèque", "360 000 $", "360 000 $"] ] },
+    ] },
+    { label: "Détails de l'hypothèque", sections: [
+        { name: "Hypothèque 1", rows: [
+            ["Prêteur", "", ""], ["Produit", "", ""], ["Type de prêt", "", ""], ["Montant net du prêt", "360 000 $", "360 000 $"], ["Date de 1er paiement", "", ""],
+            ["Date d'échéance", "", ""], ["Assureur", "", ""], ["Taux d'intérêt", "", ""], ["Type de taux", "Fixe", "Fixe"], ["Type de terme", "Fermé", ""],
+            ["Fréquence des paiements", "Mensuel", "Mensuel"], ["Terme", "5 ans", "5 ans"], ["Amortissement", "25 ans", "30 ans"], ["Montant total du prêt", "", ""], ["Versement mensuel", "", ""] ] },
+    ] },
+];
+
+const THEMES = [["sarcelle", "Sarcelle", "#146874"], ["marine", "Marine", "#1f4e79"], ["ardoise", "Ardoise", "#4f46e5"], ["foret", "Forêt", "#2f6b4f"], ["sable", "Sable", "#9a5b34"], ["nuit", "Nuit", "#15233b"]];
+const FORMATS = [["list", "Liste", "Le nom de la case à gauche, la valeur à droite."], ["compact", "Compact", "Plus de cases à l'écran, texte un peu plus petit."], ["stack", "Empilé", "Le nom de la case au-dessus de la valeur : plus de place pour les longues valeurs."], ["cols", "Deux colonnes", "BOSS et LeClasseur côte à côte, case par case."]];
+const MODES = [[1, "Consulter et copier", "Nos données rangées comme BOSS, un bouton pour copier."], [2, "Comparer avec BOSS", "Chaque case indique si BOSS est pareil, différent ou vide."], [3, "Remplir BOSS", "Un clic remplit ou corrige la case dans BOSS."]];
+const DOC = { "Détails": "Permis de conduire", "Identification": "Permis de conduire", "Adresse": "Facture Hydro-Québec", "Adresse Postale": "Facture Hydro-Québec", "Emplois": "Talon de paie oct. 2026", "Autres revenus": "Avis Allocation famille", "Actifs": "Relevé CELI", "Passifs": "Bureau de crédit", "Propriétés détenues": "Relevé hypothécaire", "Informations propriété assujettie": "Fiche Centris", "Mise de fonds": "Relevé CELI", "Renseignements sur l'hypothèque": "Promesse d'achat", "Hypothèque 1": "Lettre d'engagement" };
+const MULTI = { "Détails|Nom": [["Permis de conduire", "Tremblay-Gagnon"], ["Avis de cotisation 2025", "Tremblay"]], "Détails|Cellulaire": [["Formulaire client", "514 555-0142"], ["Talon de paie oct. 2026", "514 555-0124"]], "Emplois|Revenu brut": [["Talon de paie oct. 2026", "68 400 $"], ["T4 2025", "66 900 $"], ["Lettre d'emploi", "68 000 $"]] };
+const CO = { "Titre de politesse": ["M.", ""], "Prénom": ["Marc", "Marc"], "Nom": ["Gagnon", "Gagnon"], "Date de naissance": ["1986-11-03", "1986-11-30"], "NAS": ["000 000 001", ""], "Cellulaire": ["514 555-0177", "514 555-0177"], "Courriel": ["marc.exemple@courriel.test", ""], "Nom de l'employeur": ["Transport Exemple ltée", "Transport Exemple"], "Revenu brut": ["74 100 $", "74 100 $"], "Titre du poste": ["Répartiteur", "Répartiteur"] };
+const PEOPLE = [{ name: "Tremblay-Gagnon, Julie", data: JSON.parse(JSON.stringify(GROUPS)) }, { name: "Gagnon, Marc", data: JSON.parse(JSON.stringify(GROUPS)).map((g, gi) => ({ ...g, sections: g.sections.map((s) => ({ ...s, rows: gi === 0 ? s.rows.map(([l, v, b]) => CO[l] ? [l, ...CO[l]] : (["Détails", "Emplois", "Identification"].includes(s.name) ? [l, "", ""] : [l, v, b])) : s.rows })) })) }];
+const KEPT = new WeakSet();
+const st = { theme: "sarcelle", format: "list", mode: 2, who: 0, tab: 0, view: { type: "menu" }, q: "", open: new Set(), showNone: new Set(), income: false, help: true };
+const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
+const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const kind = (row) => { const [, v, b] = row; if (!v) return "none"; if (st.mode === 1) return "plain"; if (KEPT.has(row)) return "kept"; return b === v ? "same" : b === "" ? "empty" : "diff"; };
+const isTodo = (row) => ["diff", "empty"].includes(kind(row));
+const panel = document.getElementById("panel");
+const flat = () => PEOPLE[st.who].data.flatMap((g) => g.sections.map((s) => ({ g, s })));
+
+function controls() {
+    const th = document.getElementById("themes"); th.replaceChildren();
+    THEMES.forEach(([id, name, c]) => { const b = el("button", "sw" + (st.theme === id ? " on" : "")); const i = el("i"); i.style.background = c; b.append(i, name); b.onclick = () => { st.theme = id; document.body.dataset.theme = id; controls(); }; th.append(b); });
+    const seg = (host, items, key) => { const h = document.getElementById(host); h.replaceChildren(); items.forEach(([id, name, desc]) => { const b = el("button", st[key] === id ? "on" : ""); b.append(el("b", "", name), desc); b.onclick = () => { st[key] = id; controls(); render(); }; h.append(b); }); };
+    seg("formats", FORMATS, "format"); seg("modes", MODES, "mode");
+}
+function copyBtn(value) { const b = el("button", "btn", "Copier"); b.onclick = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(value).catch(() => {}); b.textContent = "Copié"; setTimeout(() => (b.textContent = "Copier"), 1200); }; return b; }
+function labelText(node, label) { const i = st.q ? norm(label).indexOf(st.q) : -1; if (i < 0) node.append(label); else node.append(label.slice(0, i), el("mark", "", label.slice(i, i + st.q.length)), label.slice(i + st.q.length)); return node; }
+function renderRow(row, sec) {
+    const [label, v, b] = row; const k = kind(row); const key = st.who + "|" + sec + "|" + label;
+    const cls = { diff: "s-diff", empty: "s-empty", same: "s-good", kept: "s-good" }[k] || "";
+    const wrap = el("div", "rw"); const r = el("div", "row " + cls); wrap.append(r);
+    const tip = { diff: "Différent dans BOSS", empty: "Vide dans BOSS", same: "Pareil dans BOSS", kept: "Valeur de BOSS gardée" }[k] || "";
+    const lab = labelText(el("span", "lab"), label); lab.title = tip; const vals = el("div", "vals");
+    r.append(lab, vals);
+    const sl = labelText(el("div", "stacklab"), label); sl.title = tip;
+    const toggle = () => { st.open.has(key) ? st.open.delete(key) : st.open.add(key); render(); };
+    lab.onclick = toggle; vals.onclick = toggle;
+    const cols = st.format === "cols" && st.mode > 1;
+    if (k === "none") { vals.append(sl, el("div", "val none", "—")); return wrap; }
+    if (cols) {
+        const bc = el("div", "bosscell"); if (k === "empty") bc.append(el("span", "vide", "vide")); else bc.append(KEPT.has(row) ? b : b); vals.append(bc, el("div", "val", KEPT.has(row) ? b : v));
+    } else {
+        const box = el("div"); box.append(sl);
+        if (k === "diff") { const w = el("div", "was", b); w.title = "Valeur actuellement dans BOSS"; box.append(w); }
+        if (k === "empty") { const w = el("div"); const c = el("span", "vide", "vide"); c.title = "Case vide dans BOSS"; w.append(c); box.append(w); }
+        box.append(el("div", "val", KEPT.has(row) ? b : v));
+        const multi = MULTI[sec + "|" + label]; if (multi && !KEPT.has(row) && st.who === 0) box.append(el("div", "srcs", multi.length + " sources"));
+        vals.append(box);
+    }
+    if (k === "plain") r.append(copyBtn(v));
+    else if (k === "same" || k === "kept") { const ok = el("span", "ok", "✓"); ok.title = tip; r.append(ok); }
+    else if (st.mode === 2) r.append(copyBtn(v));
+    else { const a = el("button", "btn go", k === "empty" ? "Remplir" : "Corriger"); a.onclick = (e) => { e.stopPropagation(); row[2] = v; render(); }; r.append(a); }
+    if (st.open.has(key)) {
+        const d = el("div", "detail"); const multi = st.who === 0 ? MULTI[sec + "|" + label] : null;
+        if (multi && !KEPT.has(row)) { d.append(el("div", "", "Vos documents ne disent pas tous la même chose :")); multi.forEach(([doc, val]) => { const o = el("div", "opt" + (val === row[1] ? " on" : ""), doc + " — " + val); o.onclick = () => { row[1] = val; render(); }; d.append(o); }); }
+        else { const s = el("div"); s.append("Source : " + (DOC[sec] || "Document du dossier") + " · "); const a = el("a", "", "Voir le document"); a.onclick = () => (a.textContent = "(ouvre le PDF à la bonne page)"); s.append(a); d.append(s); }
+        if (k === "diff") { const g = el("div"); const a = el("a", "", "BOSS a raison : garder « " + b + " »"); a.onclick = () => { KEPT.add(row); st.open.delete(key); render(); }; g.append(a); d.append(g); }
+        if (k === "kept") { const g = el("div"); const a = el("a", "", "Revoir cette case"); a.onclick = () => { KEPT.delete(row); render(); }; g.append(a); d.append(g); }
+        wrap.append(d);
+    }
+    return wrap;
+}
+function rowsBox(rows, sec, head) {
+    const box = el("div", "rows");
+    if (head) { const h = el("div", "subhead", head.text + "  ›"); h.onclick = head.go; box.append(h); }
+    if (st.format === "cols" && st.mode > 1) { const c = el("div", "colhead"); c.append(el("span", "", "Case"), el("span", "", "BOSS"), el("span", "", "LeClasseur"), el("span", "", "")); box.append(c); }
+    rows.forEach((r, i) => { const w = renderRow(r, sec); if (i % 2) w.classList.add("alt"); box.append(w); });
+    return box;
+}
+function secState(s) { const wd = s.rows.filter(([, v]) => v).length; const td = s.rows.filter(isTodo).length; if (!wd) return ["aucune donnée", ""]; if (st.mode === 1) return [wd + (wd > 1 ? " données" : " donnée"), ""]; return td ? [td + " à traiter", "todo"] : ["✓", ""]; }
+function go(view) { st.view = view; render(); panel.querySelector(".body").scrollTop = 0; }
+let searchBox;
+function render() {
+    panel.className = "panel f-" + st.format;
+    const keepFocus = document.activeElement === searchBox;
+    panel.replaceChildren();
+    const head = el("div", "p-head"); const deal = el("div", "deal"); deal.append(el("b", "", "Dossier BOSS #0000001"), PEOPLE[st.who].name); head.append(el("span", "logo", "LC"), deal);
+    const tabs = el("div", "tabs"); ["Informations", "Documents", "Actions"].forEach((t, i) => { const s = el("span", st.tab === i ? "on" : "", t); s.onclick = () => { st.tab = i; render(); }; tabs.append(s); });
+    panel.append(head, tabs);
+    if (st.tab) { const b = el("div", "body"); b.append(el("div", "hint", st.tab === 1 ? "Les documents du dossier, classés par LeClasseur. (Pas montré dans cet aperçu.)" : "Les actions du dossier. (Pas montré dans cet aperçu.)")); panel.append(b); return; }
+    const tools = el("div", "tools"); const pills = el("div", "pills");
+    ["Demandeur", "Co-demandeur"].forEach((t, i) => { const p = el("span", "pill" + (st.who === i ? " on" : ""), t); p.onclick = () => { st.who = i; render(); }; pills.append(p); });
+    searchBox = el("input", "search"); searchBox.type = "search"; searchBox.placeholder = "Chercher une case (ex. NAS, code postal, taux)"; searchBox.value = st.qRaw || "";
+    searchBox.oninput = () => { st.qRaw = searchBox.value; st.q = norm(searchBox.value.trim()); render(); };
+    tools.append(pills, searchBox); panel.append(tools);
+    const body = el("div", "body"); panel.append(body);
+    if (keepFocus) { searchBox.focus(); searchBox.setSelectionRange(searchBox.value.length, searchBox.value.length); }
+    const F = flat();
+    if (st.q) {
+        let hits = 0;
+        F.forEach(({ s }, idx) => { const m = s.rows.filter(([l, v]) => v && (norm(l).includes(st.q) || norm(v).includes(st.q))); if (!m.length) return; hits += m.length;
+            body.append(rowsBox(m, s.name, { text: s.name, go: () => { st.q = ""; st.qRaw = ""; go({ type: "section", idx }); } })); });
+        if (!hits) body.append(el("div", "hint", "Aucune case trouvée."));
+        return;
+    }
+    if (st.view.type === "menu") {
+        if (st.help) {
+            const h = el("div", "help");
+            h.innerHTML = "<b>Comment lire ce panneau</b><br>Le menu est le même que celui de BOSS. Cliquez une section pour voir ses cases." + (st.mode > 1 ? "<br><span class='mk g'></span> pareil dans BOSS · <span class='mk d'></span> différent · <span class='mk e'></span> vide dans BOSS" : "") + "<br>Cliquez une case pour voir de quel document elle vient.";
+            const x = el("span", "x", "Compris"); x.onclick = () => { st.help = false; render(); }; h.append(x); body.append(h);
+        }
+        if (st.mode > 1) { const n = F.reduce((a, { s }) => a + s.rows.filter(isTodo).length, 0); const c = el("div", "todo-card"); c.append(el("span", "t", "À traiter"), el("span", "n", String(n)), el("span", "chev", "›")); c.onclick = () => go({ type: "todo" }); body.append(c); }
+        PEOPLE[st.who].data.forEach((g) => {
+            body.append(el("div", "group-label", g.label)); const list = el("div", "list");
+            g.sections.forEach((s) => { const [txt, c] = secState(s); const idx = F.findIndex((f) => f.s === s); const it = el("div", "item" + (txt === "aucune donnée" ? " empty" : "")); it.append(el("span", "name", s.name), el("span", "state " + c, txt), el("span", "chev", "›")); it.onclick = () => go({ type: "section", idx }); list.append(it); });
+            body.append(list);
+        });
+        if (!st.help) { const hl = el("div", "helplink", "Comment lire ce panneau ?"); hl.onclick = () => { st.help = true; render(); }; body.append(hl); }
+        return;
+    }
+    const bar = el("div", "bar"); const back = el("span", "back", "‹ Menu"); back.onclick = () => go({ type: "menu" }); bar.append(back);
+    if (st.view.type === "todo") {
+        bar.append(el("span", "title", "À traiter"), el("span", "nav")); body.append(bar); let any = false;
+        F.forEach(({ s }, idx) => { const m = s.rows.filter(isTodo); if (!m.length) return; any = true; body.append(rowsBox(m, s.name, { text: s.name, go: () => go({ type: "section", idx }) })); });
+        if (!any) body.append(el("div", "hint", st.mode === 1 ? "Disponible quand le panneau compare avec BOSS." : "Tout concorde avec BOSS. Rien à traiter."));
+        return;
+    }
+    const idx = Math.min(st.view.idx, F.length - 1); const { s } = F[idx];
+    const nav = el("span", "nav"); const p = el("span", idx ? "" : "off", "‹"); const n = el("span", idx < F.length - 1 ? "" : "off", "›");
+    p.onclick = () => go({ type: "section", idx: idx - 1 }); n.onclick = () => go({ type: "section", idx: idx + 1 }); nav.append(p, n);
+    bar.append(el("span", "title", s.name), nav); body.append(bar);
+    const key = st.who + "|" + idx; const all = st.showNone.has(key); const shown = s.rows.filter(([, v]) => v || all); const nd = s.rows.filter(([, v]) => !v).length;
+    if (shown.length) body.append(rowsBox(shown, s.name)); else body.append(el("div", "hint", "Aucune donnée pour cette section."));
+    if (s.name === "Emplois" && st.who === 0) {
+        const c = el("div", "income"); const top = el("div", "top"); top.append(el("b", "", "Revenu retenu : 68 400 $ / an")); const a = el("a", "", st.income ? "Masquer le calcul" : "Voir le calcul"); a.onclick = () => { st.income = !st.income; render(); }; top.append(a); c.append(top);
+        if (st.income) { const k = el("div", "calc"); ["Talon de paie oct. 2026 : 2 630,77 $ aux 2 semaines × 26 = 68 400 $", "T4 2025 : 66 900 $", "Lettre d'emploi : 68 000 $ / an", "Retenu : salaire de base du talon le plus récent"].forEach((l) => k.append(el("div", "", l))); c.append(k); }
+        body.append(c);
+    }
+    const foot = el("div", "foot"); const more = el("span", "", nd ? (all ? "Masquer les cases sans donnée" : "+ " + nd + (nd > 1 ? " cases sans donnée" : " case sans donnée")) : "");
+    more.onclick = () => { all ? st.showNone.delete(key) : st.showNone.add(key); render(); }; foot.append(more);
+    const td = s.rows.filter(isTodo); if (st.mode === 3 && td.length > 1) { const fa = el("span", "act", "Remplir la section (" + td.length + ")"); fa.onclick = () => { s.rows.forEach((r) => { if (r[1] && !KEPT.has(r)) r[2] = r[1]; }); render(); }; foot.append(fa); }
+    body.append(foot);
+}
+controls(); render();
+</script>
+</body>
+</html>
