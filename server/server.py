@@ -225,8 +225,10 @@ class Base(BaseHTTPRequestHandler):
 
 class Public(Base):
     def client_ip(self) -> str:
-        # Only cloudflared reaches this port; it sets CF-Connecting-IP to the real visitor address.
-        return self.headers.get("CF-Connecting-IP", "") or self.client_address[0]
+        # This port is bound to the machine only; Tailscale Funnel proxies to it and appends the real
+        # visitor address as the LAST X-Forwarded-For entry (earlier entries are client-supplied).
+        xff = [p.strip() for p in self.headers.get("X-Forwarded-For", "").split(",") if p.strip()]
+        return xff[-1] if xff else self.client_address[0]
 
     def do_OPTIONS(self):
         origin = self.headers.get("Origin", "")

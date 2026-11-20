@@ -15,13 +15,15 @@ Données fictives seulement. Aucun nom requis. Les IP ne sont jamais gardées, s
 
 | Porte | Où | Ce qui répond |
 |---|---|---|
-| publique 8080 | tunnel Cloudflare dédié `apercu-panneau` (seulement `/api/t`, `/api/vote`, `/api/health`) | collecte |
+| publique 8080 → `127.0.0.1:18100` | Tailscale Funnel : `https://mad-server.tailab8c05.ts.net/api` (seulement `/api`) | `/api/t`, `/api/vote`, `/api/health` |
 | privée 8081 | `100.118.62.120:8098` (Tailscale) et `127.0.0.1:18098` | `/resultats`, `/api/results` |
 
 ```bash
-cd ops && docker compose up -d          # app + cloudflared
-ZONE=madera.tools HOST=avis.madera.tools \
-  ~/laurianne-sylvestre/scripts/avec-secret.sh <CLE_JETON_CLOUDFLARE> CF python3 -I ops/cloudflare.py   # une fois
+cd ops && docker compose up -d
+sudo tailscale funnel --bg --https=443 --set-path=/api http://127.0.0.1:18100/api   # une fois
+sudo tailscale funnel --https=443 off                                               # pour fermer la porte publique
 ```
+
+Depuis mad-server lui-même, l'adresse Funnel tombe sur le nginx local (port 443) : tester depuis une autre machine.
 
 Pour tester en local, ajouter `?api=http://localhost:PORT` à l'adresse de la page : ça remplace l'adresse de collecte.
