@@ -4,7 +4,8 @@
 <meta charset="utf-8" />
 <meta name="robots" content="noindex, nofollow" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>LeClasseur — Panneau BOSS (aperçu)</title>
+<meta name="lc-api" content="" />
+<title>LeClasseur — Essai du panneau à côté de BOSS</title>
 <style>
 body[data-theme="sarcelle"] { --hd1:#0b3f47; --hd2:#146874; --acc:#146874; --bg:#dfe6e4; --paper:#f3f6f5; --surf:#fff; --ink:#10201f; --soft:#40524f; --muted:#7d8d8a; --line:#e6ecea; --zebra:#f4f8f7; --diff:#b86e00; --good:#1f9d66; }
 body[data-theme="marine"]   { --hd1:#12263f; --hd2:#1f4e79; --acc:#0a7fc0; --bg:#dde4ec; --paper:#f2f5f9; --surf:#fff; --ink:#13202f; --soft:#3d4b5c; --muted:#7a8796; --line:#e3e9f0; --zebra:#f3f7fb; --diff:#c2410c; --good:#15803d; }
@@ -12,33 +13,79 @@ body[data-theme="ardoise"]  { --hd1:#1e293b; --hd2:#334155; --acc:#4f46e5; --bg:
 body[data-theme="foret"]    { --hd1:#1d3b2f; --hd2:#2f5d47; --acc:#2f6b4f; --bg:#e3e7df; --paper:#f5f6f1; --surf:#fffefb; --ink:#1c2a22; --soft:#44524a; --muted:#7f8a82; --line:#e6e8e0; --zebra:#f6f7f1; --diff:#b45309; --good:#3f8f4f; }
 body[data-theme="sable"]    { --hd1:#5b3a29; --hd2:#8a5a3c; --acc:#9a5b34; --bg:#ebe4dc; --paper:#f8f4ef; --surf:#fffdfa; --ink:#2b211b; --soft:#5a4a3f; --muted:#8f8075; --line:#ece4da; --zebra:#faf6f0; --diff:#c2410c; --good:#4d7c0f; }
 body[data-theme="nuit"]     { --hd1:#0b1220; --hd2:#15233b; --acc:#38bdf8; --bg:#0b0f17; --paper:#111827; --surf:#172033; --ink:#e5edf7; --soft:#b6c2d3; --muted:#7c8aa0; --line:#24314a; --zebra:#1b2740; --diff:#f59e0b; --good:#34d399; }
+body[data-theme="nuit"] { color-scheme: dark; }
 :root { --font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
 * { box-sizing: border-box; }
 body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--ink); transition: background .25s; min-height: 100vh; }
-.wrap { display: flex; gap: 48px; justify-content: center; align-items: flex-start; padding: 36px 24px 48px; }
-.side { width: 330px; padding-top: 8px; }
-.side h1 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.01em; }
-.side .lead { margin: 0 0 22px; font-size: 14px; line-height: 1.5; color: var(--soft); }
-.ctl { margin-bottom: 20px; }
-.ctl h3 { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
-.swatches { display: flex; flex-wrap: wrap; gap: 8px; }
-.sw { display: flex; align-items: center; gap: 7px; padding: 6px 10px 6px 6px; border-radius: 999px; border: 1px solid var(--line); background: var(--surf); color: var(--soft); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; }
-.sw i { width: 18px; height: 18px; border-radius: 50%; }
+button { font: inherit; }
+
+/* top bar */
+.topbar { display: flex; align-items: center; gap: 12px; padding: 12px 24px; }
+.topbar h1 { flex: 1; margin: 0; font-size: 17px; letter-spacing: -.01em; }
+.topbar h1 span { color: var(--muted); font-weight: 500; }
+.tb { padding: 8px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surf); color: var(--ink); font-size: 13px; font-weight: 600; cursor: pointer; }
+.tb.main { background: var(--acc); border-color: var(--acc); color: #fff; }
+body[data-theme="nuit"] .tb.main { color: #0b1220; }
+
+.wrap { display: flex; gap: 22px; justify-content: center; align-items: flex-start; padding: 4px 20px 14px; }
+.side { width: 290px; flex: 0 0 290px; max-height: var(--h); overflow-y: auto; scrollbar-width: thin; padding: 2px 4px 2px 2px; }
+:root { --h: clamp(540px, calc(100vh - 82px), 780px); }
+.ctl { margin-bottom: 16px; }
+.ctl h3 { margin: 0 0 7px; font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.ctl h3 small { text-transform: none; letter-spacing: 0; font-weight: 500; }
+.swatches { display: flex; flex-wrap: wrap; gap: 6px; }
+.sw { display: flex; align-items: center; gap: 6px; padding: 5px 9px 5px 5px; border-radius: 999px; border: 1px solid var(--line); background: var(--surf); color: var(--soft); font-size: 12px; font-weight: 600; cursor: pointer; }
+.sw i { width: 16px; height: 16px; border-radius: 50%; }
 .sw.on { border-color: var(--acc); color: var(--ink); box-shadow: 0 0 0 1px var(--acc); }
 .seg { display: flex; flex-direction: column; gap: 6px; }
-.seg button { text-align: left; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surf); color: var(--soft); font: inherit; font-size: 13px; cursor: pointer; }
+.seg button { text-align: left; padding: 8px 11px; border-radius: 10px; border: 1px solid var(--line); background: var(--surf); color: var(--soft); font-size: 12.5px; cursor: pointer; }
 .seg button b { display: block; color: var(--ink); font-size: 13px; margin-bottom: 1px; }
 .seg button.on { border-color: var(--acc); box-shadow: 0 0 0 1px var(--acc); }
-.fake { margin-top: 18px; font-size: 12px; color: var(--muted); }
-.combo { margin: 6px 0 4px; padding: 12px; border-radius: 12px; background: var(--surf); border: 1px solid var(--line); }
-.combo .sum { font-size: 13px; line-height: 1.5; color: var(--soft); margin-bottom: 10px; }
-.combo .sum b { color: var(--ink); }
-.combo button { width: 100%; padding: 10px 12px; border-radius: 10px; border: 0; background: var(--acc); color: #fff; font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; }
-body[data-theme="nuit"] .combo button { color: #0b1220; }
-.combo .hint { margin-top: 8px; font-size: 12px; color: var(--muted); line-height: 1.45; }
+.seg.locked button, .seg.locked button.on { opacity: .55; cursor: not-allowed; }
+.lockmsg { font-size: 11.5px; color: var(--muted); margin-top: 5px; }
+.fake { margin-top: 14px; font-size: 11.5px; color: var(--muted); line-height: 1.45; }
+
+/* mission card */
+.mission { margin-bottom: 18px; padding: 14px; border-radius: 14px; background: var(--surf); border: 2px solid var(--acc); box-shadow: 0 6px 20px rgba(0,0,0,.08); }
+.mission .k { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--acc); }
+.mission .q { margin: 6px 0 12px; font-size: 15px; font-weight: 700; line-height: 1.4; }
+.mission .q em { font-style: normal; background: color-mix(in srgb, var(--acc) 14%, transparent); padding: 0 4px; border-radius: 4px; }
+.mission .sub { font-size: 12.5px; color: var(--soft); line-height: 1.5; margin: -4px 0 12px; }
+.mission .acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.mission .acts button { padding: 7px 11px; border-radius: 9px; border: 1px solid var(--line); background: var(--surf); color: var(--soft); font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.mission .acts button.main { background: var(--acc); border-color: var(--acc); color: #fff; }
+body[data-theme="nuit"] .mission .acts button.main { color: #0b1220; }
+.mission .ok { color: var(--good); font-size: 15px; font-weight: 700; margin: 6px 0 4px; }
+.mission .prog { display: flex; gap: 3px; margin-top: 12px; }
+.mission .prog i { flex: 1; height: 4px; border-radius: 2px; background: var(--line); }
+.mission .prog i.d { background: var(--acc); }
+.mission .prog i.s { background: var(--muted); }
+.mission.idle { border-width: 1px; border-color: var(--line); box-shadow: none; }
+
+/* screen = BOSS + panel */
+.screen { display: flex; gap: 14px; align-items: flex-start; }
+
+/* BOSS schematic: neutral, independent of the theme */
+.boss { width: 470px; height: var(--h); display: flex; flex-direction: column; background: #f4f5f7; color: #1f2937; border-radius: 12px; overflow: hidden; border: 1px solid #d1d5db; box-shadow: 0 2px 4px rgba(0,0,0,.05), 0 12px 32px rgba(0,0,0,.10); font-size: 12.5px; color-scheme: light; }
+.boss .bh { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: #4b5563; color: #fff; font-weight: 700; font-size: 13px; }
+.boss .bh small { font-weight: 500; opacity: .8; }
+.boss .bb { flex: 1; display: flex; min-height: 0; }
+.boss .bm { width: 168px; flex: 0 0 168px; background: #e5e7eb; overflow-y: auto; padding: 6px 0; }
+.boss .bg { padding: 9px 12px 3px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #6b7280; }
+.boss .bi { padding: 6px 12px; cursor: pointer; color: #374151; }
+.boss .bi:hover { background: #d1d5db; }
+.boss .bi.on { background: #fff; color: #111827; font-weight: 700; box-shadow: inset 3px 0 0 #6b7280; }
+.boss .bc { flex: 1; overflow-y: auto; padding: 12px 14px; }
+.boss .bt { font-size: 15px; font-weight: 700; margin: 0 0 10px; }
+.boss .bf { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; }
+.boss .fl label { display: block; font-size: 11px; color: #6b7280; margin-bottom: 2px; }
+.boss .fl div { min-height: 26px; padding: 4px 7px; background: #fff; border: 1px solid #d1d5db; border-radius: 4px; overflow-wrap: anywhere; }
+.boss .fl div.flash { animation: flash 1.6s ease-out; }
+@keyframes flash { from { background: #fde68a; } to { background: #fff; } }
+.boss .note { margin-top: 14px; font-size: 11px; color: #9ca3af; }
 
 /* panel */
-.panel { width: 400px; height: 780px; display: flex; flex-direction: column; background: var(--paper); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 18px 48px rgba(0,0,0,.16); }
+.panel { width: 400px; height: var(--h); display: flex; flex-direction: column; background: var(--paper); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 18px 48px rgba(0,0,0,.16); }
 .p-head { background: linear-gradient(135deg, var(--hd1), var(--hd2)); color: #fff; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
 .logo { width: 22px; height: 22px; border-radius: 7px; background: rgba(255,255,255,.9); display: grid; place-items: center; color: var(--hd2); font-weight: 800; font-size: 12px; flex: 0 0 auto; }
 .p-head .deal { font-size: 12.5px; line-height: 1.3; opacity: .95; }
@@ -54,7 +101,7 @@ body[data-theme="nuit"] .pill.on { color: #0b1220; }
 .search { width: 100%; font: inherit; font-size: 13px; padding: 8px 10px 8px 30px; border: 1px solid var(--line); border-radius: 9px; background: var(--surf); color: var(--ink); outline: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 9px center; background-size: 14px; }
 .search:focus { border-color: var(--acc); }
 .search::placeholder { color: var(--muted); }
-.body { flex: 1; overflow-y: auto; padding-bottom: 16px; }
+.body { flex: 1; overflow-y: auto; padding-bottom: 16px; scrollbar-width: thin; }
 .help { margin: 2px 12px 8px; padding: 11px 12px; border-radius: 10px; background: var(--surf); border: 1px solid var(--line); font-size: 12.5px; color: var(--soft); line-height: 1.6; }
 .help b { color: var(--ink); }
 .help .x { display: block; text-align: right; color: var(--acc); font-weight: 600; cursor: pointer; margin-top: 2px; }
@@ -98,7 +145,7 @@ body[data-theme="nuit"] .pill.on { color: #0b1220; }
 .vide { display: inline-block; font-size: 11px; color: var(--muted); border: 1px dashed var(--muted); border-radius: 4px; padding: 0 6px; line-height: 15px; margin-bottom: 2px; opacity: .85; }
 .srcs { font-size: 11.5px; color: var(--acc); margin-top: 1px; }
 .ok { flex: 0 0 auto; color: var(--good); font-size: 13px; padding-right: 4px; opacity: .7; }
-.btn { flex: 0 0 auto; border: 1px solid var(--line); background: var(--surf); color: var(--soft); border-radius: 8px; font: inherit; font-size: 12px; font-weight: 600; padding: 4px 9px; cursor: pointer; white-space: nowrap; }
+.btn { flex: 0 0 auto; border: 1px solid var(--line); background: var(--surf); color: var(--soft); border-radius: 8px; font-size: 12px; font-weight: 600; padding: 4px 9px; cursor: pointer; white-space: nowrap; }
 .btn:hover { border-color: var(--acc); color: var(--acc); }
 .btn.go { border-color: var(--acc); color: var(--acc); }
 .btn.go:hover { background: var(--acc); color: #fff; }
@@ -119,7 +166,6 @@ body[data-theme="nuit"] .pill.on { color: #0b1220; }
 .hint { margin: 16px 14px; font-size: 13px; color: var(--muted); line-height: 1.5; }
 .helplink { margin: 14px 14px 0; font-size: 12px; color: var(--muted); cursor: pointer; }
 mark { background: color-mix(in srgb, var(--diff) 22%, transparent); color: inherit; border-radius: 3px; }
-
 /* format: compact */
 .f-compact .row { min-height: 30px; padding-top: 5px; padding-bottom: 5px; }
 .f-compact .lab, .f-compact .val { font-size: 12.5px; }
@@ -127,7 +173,7 @@ mark { background: color-mix(in srgb, var(--diff) 22%, transparent); color: inhe
 .f-compact .btn { padding: 2px 8px; font-size: 11.5px; }
 .f-compact .item { padding: 8px 12px; }
 .f-compact .detail { padding-left: 140px; }
-/* format: empilé (case name above the value) */
+/* format: empilé */
 .f-stack .row { align-items: flex-end; }
 .f-stack .row .lab { display: none; }
 .f-stack .stacklab { display: block !important; font-size: 11.5px; color: var(--muted); margin-bottom: 2px; position: relative; }
@@ -138,7 +184,7 @@ mark { background: color-mix(in srgb, var(--diff) 22%, transparent); color: inhe
 .f-stack .val { font-size: 14px; }
 .f-stack .detail { padding-left: 14px; }
 .stacklab { display: none; }
-/* format: deux colonnes (BOSS | LeClasseur) */
+/* format: deux colonnes */
 .f-cols .colhead { display: flex; gap: 10px; padding: 7px 12px 7px 14px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); }
 .f-cols .colhead span:first-child { flex: 0 0 106px; }
 .f-cols .colhead span { flex: 1; }
@@ -148,31 +194,112 @@ mark { background: color-mix(in srgb, var(--diff) 22%, transparent); color: inhe
 .f-cols .vals > * { flex: 1; min-width: 0; }
 .f-cols .was { text-decoration: none; font-size: 12.5px; color: var(--soft); margin: 0; }
 .f-cols .vide { align-self: center; flex: 0 0 auto; margin: 0; }
-.f-cols .bosscell { flex: 1; min-width: 0; font-size: 12.5px; color: var(--soft); overflow-wrap: anywhere; }
-.f-cols .srcs { display: none; }
+.f-cols .bosscell { font-size: 13px; color: var(--soft); line-height: 1.25; overflow-wrap: anywhere; }
+.f-cols .row > .btn, .f-cols .row > .ok { flex: 0 0 62px; text-align: center; }
 .f-cols .detail { padding-left: 14px; }
-.f-cols .row > .btn, .f-cols .row > .ok { flex: 0 0 62px; text-align: center; padding-left: 0; padding-right: 0; }
-.body { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
-body[data-theme="nuit"] { color-scheme: dark; }
+
+/* modals */
+.modal { position: fixed; inset: 0; z-index: 50; display: none; align-items: flex-start; justify-content: center; padding: 40px 16px; background: rgba(10,15,20,.55); overflow-y: auto; }
+.modal.on { display: flex; }
+.card { width: 640px; max-width: 100%; background: var(--surf); color: var(--ink); border-radius: 18px; padding: 26px 28px; box-shadow: 0 24px 64px rgba(0,0,0,.3); }
+.card h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.01em; }
+.card .lead { margin: 0 0 16px; font-size: 14.5px; line-height: 1.55; color: var(--soft); }
+.card h4 { margin: 18px 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--acc); }
+.card p, .card li { font-size: 14px; line-height: 1.55; color: var(--soft); }
+.card ul, .card ol { margin: 4px 0 0; padding-left: 20px; }
+.card li { margin-bottom: 5px; }
+.card li b, .card p b { color: var(--ink); }
+.card .small { font-size: 12.5px; color: var(--muted); margin-top: 16px; line-height: 1.5; }
+.card .acts { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.card .acts button { padding: 11px 18px; border-radius: 11px; border: 1px solid var(--line); background: var(--surf); color: var(--ink); font-size: 14px; font-weight: 700; cursor: pointer; }
+.card .acts button.main { background: var(--acc); border-color: var(--acc); color: #fff; }
+body[data-theme="nuit"] .card .acts button.main { color: #0b1220; }
+.qq { margin-top: 18px; }
+.qq > b { display: block; font-size: 14.5px; margin-bottom: 7px; }
+.qq > b small { font-weight: 500; color: var(--muted); }
+.choices { display: flex; flex-wrap: wrap; gap: 7px; }
+.choices label { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; font-size: 13.5px; cursor: pointer; background: var(--surf); }
+.choices label:has(input:checked) { border-color: var(--acc); box-shadow: 0 0 0 1px var(--acc); font-weight: 600; }
+.choices input { accent-color: var(--acc); margin: 0; }
+.scale { display: grid; grid-template-columns: 1fr auto; gap: 8px 14px; align-items: center; }
+.scale > span { font-size: 13.5px; color: var(--soft); }
+.scale .dots { display: flex; gap: 5px; }
+.scale .dots label { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; }
+.scale .dots label:has(input:checked) { background: var(--acc); border-color: var(--acc); color: #fff; }
+.scale .dots input { position: absolute; opacity: 0; width: 0; height: 0; }
+.scale .legend { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+textarea, .card input[type=text] { width: 100%; font: inherit; font-size: 14px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+textarea { min-height: 80px; resize: vertical; }
+.status { margin-top: 12px; font-size: 13.5px; font-weight: 600; min-height: 20px; }
+.status.good { color: var(--good); }
+.status.bad { color: var(--diff); }
+.narrow { display: none; margin: 0 20px 10px; padding: 10px 12px; border-radius: 10px; background: var(--surf); font-size: 13px; color: var(--soft); }
+@media (max-width: 1240px) { .wrap { flex-wrap: wrap; } .side { width: 100%; flex-basis: 100%; max-width: 900px; max-height: none; } }
+@media (max-width: 920px) { .narrow { display: block; } .screen { flex-direction: column; } .boss { width: 100%; height: 420px; } .panel { width: 100%; } }
 </style>
 </head>
 <body data-theme="sarcelle">
+<div class="topbar">
+    <h1>LeClasseur <span>· essai du panneau à côté de BOSS</span></h1>
+    <button class="tb" id="btn-intro">Comment ça marche ?</button>
+    <button class="tb main" id="btn-avis">Donner mon avis</button>
+</div>
+<div class="narrow">Cette page est faite pour un écran d'ordinateur : c'est là qu'un courtier utilise BOSS.</div>
 <div class="wrap">
     <div class="side">
-        <h1>Le panneau LeClasseur dans BOSS</h1>
-        <p class="lead">À côté de votre dossier BOSS, LeClasseur affiche ce qu'il a trouvé dans vos documents, rangé exactement comme le menu de BOSS. Vous voyez d'un coup d'œil ce qui manque ou ce qui ne concorde pas.</p>
-        <div class="ctl"><h3>Couleurs</h3><div class="swatches" id="themes"></div></div>
-        <div class="ctl"><h3>Format</h3><div class="seg" id="formats"></div></div>
-        <div class="ctl"><h3>Ce que le panneau fait</h3><div class="seg" id="modes"></div></div>
-        <div class="combo"><div class="sum" id="combo-sum"></div><button id="combo-copy">Copier ma combinaison</button><div class="hint" id="combo-hint">Collez-la ensuite dans un texto ou un courriel à Marco.</div></div>
-        <div class="fake">Aperçu interactif — données fictives, aucun vrai client.</div>
+        <div id="mission"></div>
+        <div class="ctl"><h3>Format du panneau</h3><div class="seg" id="formats"></div><div class="lockmsg" id="lock-f"></div></div>
+        <div class="ctl"><h3>Ce que le panneau fait</h3><div class="seg" id="modes"></div><div class="lockmsg" id="lock-m"></div></div>
+        <div class="ctl"><h3>Couleurs <small>(secondaire)</small></h3><div class="swatches" id="themes"></div></div>
+        <div class="fake">Aperçu interactif. Données fictives, aucun vrai client. La page note de façon anonyme comment elle est utilisée.</div>
     </div>
-    <div class="panel" id="panel"></div>
+    <div class="screen">
+        <div class="boss" id="boss"></div>
+        <div class="panel" id="panel"></div>
+    </div>
 </div>
+
+<div class="modal" id="intro"><div class="card">
+    <h2>Mettez-vous dans la peau d'un courtier</h2>
+    <p class="lead">Un courtier hypothécaire passe une grande partie de sa journée dans <b>BOSS</b>, le logiciel où il monte les dossiers de prêt de ses clients. <b>LeClasseur</b> lit les documents du client (talons de paie, avis de cotisation, permis de conduire…) et affiche ce qu'il a trouvé dans un panneau, juste à côté de BOSS, rangé dans le même ordre que BOSS.</p>
+    <p>À l'écran, vous avez à gauche un <b>schéma de BOSS</b>, et à droite le <b>panneau LeClasseur</b>. Imaginez que vous le voyez des dizaines de fois par jour, pendant des heures.</p>
+    <h4>Ce qu'on veut savoir (la couleur, c'est secondaire)</h4>
+    <ul>
+        <li><b>Se retrouver :</b> quand je suis sur une section dans BOSS, est-ce que je la retrouve tout de suite dans le panneau ?</li>
+        <li><b>Repérer :</b> est-ce que je vois vite quelle case est différente de BOSS, ou vide dans BOSS ?</li>
+        <li><b>Suivre :</b> est-ce que je sais où je suis rendu et ce qu'il me reste à faire ?</li>
+        <li><b>Confort :</b> est-ce que c'est reposant pour les yeux toute une journée ?</li>
+    </ul>
+    <h4>Comment ça se passe (environ 5 minutes)</h4>
+    <ol>
+        <li><b>12 petites missions :</b> 3 avec chacun des 4 formats du panneau. Le format change tout seul. Allez à votre rythme : c'est le panneau qu'on teste, pas vous.</li>
+        <li>Ensuite, <b>explorez librement</b> : changez de format, cliquez partout.</li>
+        <li><b>Donnez votre avis</b> avec le bouton en haut à droite. Il est enregistré tout de suite, et vous pouvez revenir le changer : c'est votre dernier choix qui compte.</li>
+    </ol>
+    <p class="small">La page note de façon anonyme comment vous l'utilisez (temps passé sur chaque format, clics, missions) pour nous aider à choisir. Aucun nom n'est requis, et ces données servent seulement à améliorer le panneau.</p>
+    <div class="acts"><button class="main" id="go-missions">Commencer les missions</button><button id="go-free">Explorer sans missions</button></div>
+</div></div>
+
+<div class="modal" id="avis"><div class="card">
+    <h2>Votre avis</h2>
+    <p class="lead">Pensez à une journée complète de travail avec ce panneau à côté de BOSS.</p>
+    <form id="avis-form">
+        <div class="qq"><b>Quel format choisiriez-vous pour travailler tous les jours ?</b><div class="choices" id="q-pref"></div></div>
+        <div class="qq"><b>Avec ce format, êtes-vous d'accord ? <small>(1 = pas du tout, 5 = tout à fait)</small></b><div class="scale" id="q-scale"></div></div>
+        <div class="qq"><b>Lequel vous plaît le moins ? <small>(facultatif)</small></b><div class="choices" id="q-least"></div></div>
+        <div class="qq"><b>Qu'est-ce qui vous a mêlé, ou qui manque ? <small>(facultatif)</small></b><textarea name="comment" maxlength="2000" placeholder="Ex. : je ne voyais pas où j'étais rendu, les points de couleur se ressemblent…"></textarea></div>
+        <div class="qq"><b>Couleur préférée <small>(facultatif, secondaire)</small></b><div class="choices" id="q-color"></div></div>
+        <div class="qq"><b>Vous êtes…</b><div class="choices" id="q-role"></div></div>
+        <div class="qq"><b>Votre prénom <small>(facultatif)</small></b><input type="text" name="name" maxlength="60" autocomplete="given-name" /></div>
+        <div class="status" id="avis-status"></div>
+        <div class="acts"><button type="submit" class="main">Enregistrer mon avis</button><button type="button" id="avis-close">Fermer</button></div>
+    </form>
+</div></div>
+
 <script>
 const GROUPS = [
     { label: "Information Demandeur", sections: [
-        { name: "Détails", open: true, rows: [
+        { name: "Détails", rows: [
             ["Titre de politesse", "Mme", ""], ["Prénom", "Julie", "Julie"], ["Initiales", "", ""], ["Nom", "Tremblay-Gagnon", "Tremblay"], ["Suffixe", "", ""],
             ["Date de naissance", "1988-04-12", "1988-04-12"], ["NAS", "000 000 000", ""], ["État civil", "Conjoint de fait", "Célibataire"], ["Conjoint", "", ""],
             ["Numéro au travail", "450 555-0100", "450 555-0100"], ["Ext", "", ""], ["Numéro de fax", "", ""], ["Cellulaire", "514 555-0142", "514 555-0124"],
@@ -181,7 +308,7 @@ const GROUPS = [
             ["Personnes à charge", "2", ""], ["Langue de préférence", "Français", "Français"] ] },
         { name: "Identification", rows: [
             ["Type", "Permis de conduire", ""], ["Pays", "Canada", ""], ["Province", "Québec", ""], ["Numéro", "T0000-000000-00", ""], ["Date d'expiration", "2029-04-12", ""] ] },
-        { name: "Adresse", open: true, rows: [
+        { name: "Adresse", rows: [
             ["Type d'adresse", "Actuelle", "Actuelle"], ["Pays", "Canada", "Canada"], ["Unité", "", ""], ["Numéro de rue", "1234", "1234"], ["Nom de rue", "des Érables", "des Érables"],
             ["Type de rue", "Rue", "Rue"], ["Direction de la rue", "", ""], ["Ville", "Longueuil", "Longueuil"], ["Province", "Québec", "Québec"], ["Code postal", "J4K 0A0", "J4K 0A1"],
             ["Date de début", "2019-07-01", ""], ["Date de fin", "", ""], ["Statut", "Locataire", "Locataire"], ["Loyer", "1 350 $", ""],
@@ -225,46 +352,211 @@ const GROUPS = [
             ["Fréquence des paiements", "Mensuel", "Mensuel"], ["Terme", "5 ans", "5 ans"], ["Amortissement", "25 ans", "30 ans"], ["Montant total du prêt", "", ""], ["Versement mensuel", "", ""] ] },
     ] },
 ];
-
 const THEMES = [["sarcelle", "Sarcelle", "#146874"], ["marine", "Marine", "#1f4e79"], ["ardoise", "Ardoise", "#4f46e5"], ["foret", "Forêt", "#2f6b4f"], ["sable", "Sable", "#9a5b34"], ["nuit", "Nuit", "#15233b"]];
-const FORMATS = [["list", "Liste", "Le nom de la case à gauche, la valeur à droite."], ["compact", "Compact", "Plus de cases à l'écran, texte un peu plus petit."], ["stack", "Empilé", "Le nom de la case au-dessus de la valeur : plus de place pour les longues valeurs."], ["cols", "Deux colonnes", "BOSS et LeClasseur côte à côte, case par case."]];
+const FORMATS = [["list", "Liste", "Le nom de la case à gauche, la valeur à droite."], ["compact", "Compact", "Plus de cases à l'écran, texte un peu plus petit."], ["stack", "Empilé", "Le nom de la case au-dessus de la valeur."], ["cols", "Deux colonnes", "BOSS et LeClasseur côte à côte, case par case."]];
 const MODES = [[1, "Consulter et copier", "Nos données rangées comme BOSS, un bouton pour copier."], [2, "Comparer avec BOSS", "Chaque case indique si BOSS est pareil, différent ou vide."], [3, "Remplir BOSS", "Un clic remplit ou corrige la case dans BOSS."]];
 const DOC = { "Détails": "Permis de conduire", "Identification": "Permis de conduire", "Adresse": "Facture Hydro-Québec", "Adresse Postale": "Facture Hydro-Québec", "Emplois": "Talon de paie oct. 2026", "Autres revenus": "Avis Allocation famille", "Actifs": "Relevé CELI", "Passifs": "Bureau de crédit", "Propriétés détenues": "Relevé hypothécaire", "Informations propriété assujettie": "Fiche Centris", "Mise de fonds": "Relevé CELI", "Renseignements sur l'hypothèque": "Promesse d'achat", "Hypothèque 1": "Lettre d'engagement" };
 const MULTI = { "Détails|Nom": [["Permis de conduire", "Tremblay-Gagnon"], ["Avis de cotisation 2025", "Tremblay"]], "Détails|Cellulaire": [["Formulaire client", "514 555-0142"], ["Talon de paie oct. 2026", "514 555-0124"]], "Emplois|Revenu brut": [["Talon de paie oct. 2026", "68 400 $"], ["T4 2025", "66 900 $"], ["Lettre d'emploi", "68 000 $"]] };
 const CO = { "Titre de politesse": ["M.", ""], "Prénom": ["Marc", "Marc"], "Nom": ["Gagnon", "Gagnon"], "Date de naissance": ["1986-11-03", "1986-11-30"], "NAS": ["000 000 001", ""], "Cellulaire": ["514 555-0177", "514 555-0177"], "Courriel": ["marc.exemple@courriel.test", ""], "Nom de l'employeur": ["Transport Exemple ltée", "Transport Exemple"], "Revenu brut": ["74 100 $", "74 100 $"], "Titre du poste": ["Répartiteur", "Répartiteur"] };
-const PEOPLE = [{ name: "Tremblay-Gagnon, Julie", data: JSON.parse(JSON.stringify(GROUPS)) }, { name: "Gagnon, Marc", data: JSON.parse(JSON.stringify(GROUPS)).map((g, gi) => ({ ...g, sections: g.sections.map((s) => ({ ...s, rows: gi === 0 ? s.rows.map(([l, v, b]) => CO[l] ? [l, ...CO[l]] : (["Détails", "Emplois", "Identification"].includes(s.name) ? [l, "", ""] : [l, v, b])) : s.rows })) })) }];
-const KEPT = new WeakSet();
-const st = { theme: "sarcelle", format: "list", mode: 2, who: 0, tab: 0, view: { type: "menu" }, q: "", open: new Set(), showNone: new Set(), income: false, help: true };
+const ROLES = [["courtier", "Courtier hypothécaire"], ["adjoint", "Adjoint(e) de courtier"], ["immobilier", "Autre métier de l'immobilier ou du prêt"], ["autre", "Autre domaine"]];
+const STATEMENTS = [["retrouver", "Je retrouve tout de suite dans le panneau la section où je suis dans BOSS."], ["reperer", "Je vois vite quelle case est différente de BOSS ou vide dans BOSS."], ["suivre", "Je sais où je suis rendu et ce qu'il me reste à faire."], ["confort", "C'est reposant pour les yeux pour une journée complète."]];
+
+/* ---------- identity ---------- */
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+const uuid = () => (crypto.randomUUID ? crypto.randomUUID() : "x" + Math.random().toString(36).slice(2) + Date.now().toString(36));
+function visitorId() {
+    const fromCookie = (document.cookie.match(/(?:^|; )lc_v=([\w-]{8,64})/) || [])[1];
+    const id = store.get("lc_visitor", null) || fromCookie || uuid();
+    store.set("lc_visitor", id);
+    document.cookie = "lc_v=" + id + "; max-age=31536000; path=/; SameSite=Lax" + (location.protocol === "https:" ? "; Secure" : "");
+    return id;
+}
+const VISITOR = visitorId();
+const SESSION = uuid();
+const API = (new URLSearchParams(location.search).get("api") || (document.querySelector('meta[name="lc-api"]') || {}).content || "").replace(/\/$/, "");
+
+/* ---------- telemetry ---------- */
+const T = { t0: Date.now(), seq: 0, events: [], lastInput: Date.now(), activeTotal: 0, active: { format: {}, theme: {}, mode: {}, combo: {}, phase: {} } };
+function track(type, data) { T.events.push(Object.assign({ t: Date.now() - T.t0, type }, data || {})); if (T.events.length >= 60) flush(false); }
+["pointermove", "pointerdown", "keydown", "wheel", "touchstart", "scroll"].forEach((e) => addEventListener(e, () => (T.lastInput = Date.now()), { passive: true, capture: true }));
+function phase() { if (document.getElementById("intro").classList.contains("on")) return "intro"; if (document.getElementById("avis").classList.contains("on")) return "avis"; return mission ? "missions" : "libre"; }
+setInterval(() => {
+    if (document.visibilityState !== "visible" || Date.now() - T.lastInput > 30000) return;
+    const a = T.active, inc = (o, k) => (o[k] = (o[k] || 0) + 1), ph = phase();
+    inc(a.phase, ph); T.activeTotal++;
+    if (ph === "intro") return;
+    inc(a.format, st.format); inc(a.theme, st.theme); inc(a.mode, String(st.mode)); inc(a.combo, st.format + "|" + st.mode + "|" + ph);
+    if (mission && mission.state === "run") mission.activeS++;
+}, 1000);
+function payload() {
+    return JSON.stringify({ v: 1, visitor: VISITOR, session: SESSION, seq: ++T.seq, started: T.t0, sent: Date.now(), activeTotal: T.activeTotal, active: T.active,
+        ua: { w: innerWidth, h: innerHeight, coarse: matchMedia("(pointer:coarse)").matches, lang: navigator.language, tz: (Intl.DateTimeFormat().resolvedOptions() || {}).timeZone },
+        events: T.events.splice(0, T.events.length) });
+}
+async function post(path, body) {
+    const r = await fetch(API + path, { method: "POST", body, headers: { "Content-Type": "text/plain;charset=UTF-8" }, keepalive: body.length < 60000 });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json().catch(() => ({}));
+}
+let lastSent = -1, flushing = false;
+async function flush(leaving) {
+    if (!API) return;
+    if (!T.events.length && T.activeTotal === lastSent) return;
+    lastSent = T.activeTotal;
+    const body = payload();
+    if (leaving && navigator.sendBeacon && navigator.sendBeacon(API + "/api/t", new Blob([body], { type: "text/plain" }))) return;
+    const queue = store.get("lc_outbox", []); queue.push(body); store.set("lc_outbox", queue.slice(-40));
+    if (leaving || flushing) return;
+    flushing = true;
+    try {
+        // Send oldest first; at the first failure keep the rest for later instead of hammering the server.
+        const pending = store.get("lc_outbox", []); store.set("lc_outbox", []); let i = 0;
+        for (; i < pending.length; i++) { try { await post("/api/t", pending[i]); } catch (e) { break; } }
+        const left = pending.slice(i);
+        if (left.length) store.set("lc_outbox", left.concat(store.get("lc_outbox", [])).slice(-40));
+    } finally { flushing = false; }
+}
+setInterval(() => flush(false), 20000);
+addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") flush(true); else track("return"); });
+addEventListener("pagehide", () => flush(true));
+
+/* ---------- panel state ---------- */
+function makePeople() {
+    const base = JSON.parse(JSON.stringify(GROUPS));
+    const co = JSON.parse(JSON.stringify(GROUPS)).map((g, gi) => ({ ...g, sections: g.sections.map((s) => ({ ...s, rows: gi === 0 ? s.rows.map(([l, v, b]) => CO[l] ? [l, ...CO[l]] : (["Détails", "Emplois", "Identification"].includes(s.name) ? [l, "", ""] : [l, v, b])) : s.rows })) }));
+    return [{ name: "Tremblay-Gagnon, Julie", data: base }, { name: "Gagnon, Marc", data: co }];
+}
+let PEOPLE = makePeople();
+let KEPT = new WeakSet();
+const st = { theme: store.get("lc_theme", "sarcelle"), format: "list", mode: 2, who: 0, tab: 0, view: { type: "menu" }, q: "", qRaw: "", open: new Set(), showNone: new Set(), income: false, help: true, boss: "Détails" };
+if (!THEMES.some((t) => t[0] === st.theme)) st.theme = "sarcelle";
+document.body.dataset.theme = st.theme;
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
 const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const kind = (row) => { const [, v, b] = row; if (!v) return "none"; if (st.mode === 1) return "plain"; if (KEPT.has(row)) return "kept"; return b === v ? "same" : b === "" ? "empty" : "diff"; };
 const isTodo = (row) => ["diff", "empty"].includes(kind(row));
 const panel = document.getElementById("panel");
 const flat = () => PEOPLE[st.who].data.flatMap((g) => g.sections.map((s) => ({ g, s })));
+const fmtName = (id) => (FORMATS.find((f) => f[0] === id) || [, id])[1];
 
-function controls() {
-    const th = document.getElementById("themes"); th.replaceChildren();
-    THEMES.forEach(([id, name, c]) => { const b = el("button", "sw" + (st.theme === id ? " on" : "")); const i = el("i"); i.style.background = c; b.append(i, name); b.onclick = () => { st.theme = id; document.body.dataset.theme = id; controls(); }; th.append(b); });
-    const seg = (host, items, key) => { const h = document.getElementById(host); h.replaceChildren(); items.forEach(([id, name, desc]) => { const b = el("button", st[key] === id ? "on" : ""); b.append(el("b", "", name), desc); b.onclick = () => { st[key] = id; controls(); render(); }; h.append(b); }); };
-    seg("formats", FORMATS, "format"); seg("modes", MODES, "mode");
-    const [c, f, m] = comboParts(); const sum = document.getElementById("combo-sum"); sum.replaceChildren("Votre choix : couleur ", el("b", "", c), ", format ", el("b", "", f), ", mode ", el("b", "", m), ".");
-}
-function comboParts() { return [THEMES.find((x) => x[0] === st.theme)[1], FORMATS.find((x) => x[0] === st.format)[1], MODES.find((x) => x[0] === st.mode)[1]]; }
-function comboText() { const [c, f, m] = comboParts(); return "Mon choix pour le panneau LeClasseur : couleur " + c + ", format " + f + ", mode " + m + "."; }
-function legacyCopy(text) {
-    return new Promise((ok, ko) => { const ta = document.createElement("textarea"); ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.append(ta); ta.select(); let done = false; try { done = document.execCommand("copy"); } catch (e) {} ta.remove(); done ? ok() : ko(); });
-}
-function copyText(text) {
-    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).catch(() => legacyCopy(text));
-    return legacyCopy(text);
-}
-document.getElementById("combo-copy").onclick = () => {
-    const b = document.getElementById("combo-copy"), h = document.getElementById("combo-hint"), text = comboText();
-    copyText(text).then(() => { b.textContent = "Copié ✓"; h.textContent = "C'est copié. Collez-le dans un texto ou un courriel à Marco."; },
-        () => { b.textContent = "Copier ma combinaison"; h.textContent = "Copiez ce texte à la main : " + text; })
-        .finally(() => setTimeout(() => (b.textContent = "Copier ma combinaison"), 1800));
+/* ---------- missions ---------- */
+// The target section changes with the position (1st, 2nd... format tried) so nobody learns the answer,
+// and the format order is shuffled per person so every format is tried first by somebody.
+const TARGETS = {
+    nav: ["Passifs", "Mise de fonds", "Autres revenus", "Actifs"],
+    diff: ["Adresse", "Informations propriété assujettie", "Hypothèque 1", "Emplois"],
+    empty: ["Renseignements sur l'hypothèque", "Emplois", "Adresse", "Propriétés détenues"],
 };
-function copyBtn(value) { const b = el("button", "btn", "Copier"); b.onclick = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(value).catch(() => {}); b.textContent = "Copié"; setTimeout(() => (b.textContent = "Copier"), 1200); }; return b; }
+const STEPS = ["nav", "diff", "empty"];
+const MTEXT = {
+    nav: (s) => ["BOSS est ouvert sur la section <em>" + s + "</em>. Ouvrez la même section dans le panneau LeClasseur.", "Le but : se retrouver vite entre BOSS et le panneau."],
+    diff: (s) => ["Dans la section <em>" + s + "</em>, une case n'a pas la même valeur que BOSS. Trouvez-la dans le panneau et cliquez dessus.", "Le but : repérer vite ce qui ne concorde pas."],
+    empty: (s) => ["Dans la section <em>" + s + "</em>, trouvez une case que BOSS a laissée vide mais que LeClasseur connaît, et cliquez dessus.", "Le but : repérer vite ce qui manque dans BOSS."],
+};
+let ms = store.get("lc_missions", null); // {order, pos, step, results, done}
+let mission = null; // {type, target, format, start, activeS, wrong, state}
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function saveMs() { store.set("lc_missions", ms); }
+function startSeries() {
+    if (!ms || ms.done || !Array.isArray(ms.order)) ms = { order: shuffle(FORMATS.map((f) => f[0])), pos: 0, step: 0, results: [], done: false };
+    saveMs(); track("series_start", { order: ms.order.join(","), pos: ms.pos, step: ms.step }); startMission();
+}
+function startMission() {
+    const type = STEPS[ms.step], target = TARGETS[type][ms.pos], f = ms.order[ms.pos];
+    PEOPLE = makePeople(); KEPT = new WeakSet();
+    Object.assign(st, { format: f, mode: 2, who: 0, tab: 0, view: { type: "menu" }, q: "", qRaw: "", open: new Set(), showNone: new Set(), income: false, boss: target });
+    mission = { type, target, format: f, start: Date.now(), activeS: 0, wrong: 0, state: "run" };
+    track("mission_start", { m: type, target, format: f, pos: ms.pos });
+    controls(); render(); renderMission();
+    const b = panel.querySelector(".body"); if (b) b.scrollTop = 0;
+}
+function endMission(ok) {
+    if (!mission || mission.state !== "run") return;
+    const r = { format: mission.format, pos: ms.pos, m: mission.type, target: mission.target, ok, ms: Date.now() - mission.start, activeS: mission.activeS, wrong: mission.wrong };
+    ms.results.push(r); track(ok ? "mission_done" : "mission_skip", r);
+    mission.state = ok ? "won" : "skipped"; mission.result = r;
+    ms.step++; if (ms.step >= STEPS.length) { ms.step = 0; ms.pos++; }
+    if (ms.pos >= ms.order.length) ms.done = true;
+    saveMs(); renderMission(); flush(false);
+    if (ok) setTimeout(() => { if (mission && mission.state === "won") nextAfter(); }, 1300);
+}
+function nextAfter() {
+    if (ms.done) { mission = null; track("series_done"); controls(); renderMission(); openAvis("missions"); return; }
+    if (ms.step === 0) { mission = { state: "between" }; controls(); renderMission(); return; }
+    startMission();
+}
+function stopSeries() { track("series_stop", { pos: ms && ms.pos, step: ms && ms.step }); mission = null; controls(); renderMission(); }
+function onNav(view, via) {
+    const F = flat(); const name = view.type === "section" ? F[Math.min(view.idx, F.length - 1)].s.name : view.type;
+    track("nav", { to: name, via });
+    if (mission && mission.state === "run" && mission.type === "nav" && name === mission.target) endMission(true);
+}
+function onRowClick(sec, label, k) {
+    track("row_open", { sec, label, k });
+    if (!mission || mission.state !== "run" || mission.type === "nav") return;
+    if (sec === mission.target && k === mission.type) endMission(true); else mission.wrong++;
+}
+function renderMission() {
+    const box = document.getElementById("mission"); box.replaceChildren();
+    const card = el("div", "mission"); box.append(card);
+    const prog = () => { const p = el("div", "prog"); const res = (ms && ms.results) || []; for (let i = 0; i < 12; i++) { const r = res[i]; p.append(el("i", r ? (r.ok ? "d" : "s") : "")); } return p; };
+    const btn = (txt, cls, fn) => { const b = el("button", cls, txt); b.type = "button"; b.onclick = fn; return b; };
+    if (mission && mission.state === "between") {
+        card.append(el("div", "k", "Format " + ms.pos + " sur 4 terminé"));
+        const q = el("div", "q"); q.innerHTML = "Bravo ! Prochain format : <em>" + fmtName(ms.order[ms.pos]) + "</em>"; card.append(q);
+        const a = el("div", "acts"); a.append(btn("Continuer", "main", () => startMission()), btn("Arrêter les missions", "", stopSeries)); card.append(a, prog()); return;
+    }
+    if (mission) {
+        const n = ms.results.length + (mission.state === "run" ? 1 : 0);
+        card.append(el("div", "k", "Mission " + n + " sur 12 · format " + fmtName(mission.format)));
+        const [q, sub] = MTEXT[mission.type](mission.target); const qd = el("div", "q"); qd.innerHTML = q; card.append(qd);
+        if (mission.state === "run") { card.append(el("div", "sub", sub)); const a = el("div", "acts"); a.append(btn("Je ne trouve pas", "", () => endMission(false)), btn("Arrêter les missions", "", stopSeries)); card.append(a); }
+        else if (mission.state === "won") card.append(el("div", "ok", "Trouvé en " + Math.max(1, Math.round(mission.result.ms / 1000)) + " s ✓"));
+        else { card.append(el("div", "sub", "Pas grave, c'est noté : ça nous dit justement ce qui n'est pas clair.")); const a = el("div", "acts"); a.append(btn("Mission suivante", "main", nextAfter)); card.append(a); }
+        card.append(prog()); return;
+    }
+    card.classList.add("idle");
+    const did = ms && ms.results ? ms.results.length : 0;
+    if (ms && ms.done) {
+        card.append(el("div", "k", "Missions terminées ✓"));
+        card.append(el("div", "sub", "Merci ! Explorez librement : changez de format, de mode, cliquez partout. Puis donnez ou modifiez votre avis."));
+        const a = el("div", "acts"); a.append(btn("Donner mon avis", "main", () => openAvis("card")), btn("Refaire les missions", "", () => { ms = null; startSeries(); })); card.append(a);
+    } else {
+        card.append(el("div", "k", "Exploration libre"));
+        card.append(el("div", "sub", did ? "Vous avez fait " + did + " missions sur 12." : "12 petites missions pour tester les 4 formats (environ 5 minutes)."));
+        const a = el("div", "acts"); a.append(btn(did ? "Continuer les missions" : "Faire les missions", "main", startSeries), btn("Donner mon avis", "", () => openAvis("card"))); card.append(a);
+    }
+}
+
+/* ---------- controls ---------- */
+function controls() {
+    const locked = !!mission;
+    const th = document.getElementById("themes"); th.replaceChildren();
+    THEMES.forEach(([id, name, c]) => { const b = el("button", "sw" + (st.theme === id ? " on" : "")); const i = el("i"); i.style.background = c; b.append(i, name); b.onclick = () => { st.theme = id; store.set("lc_theme", id); document.body.dataset.theme = id; track("theme", { v: id }); controls(); }; th.append(b); });
+    const seg = (host, items, key, lockId) => {
+        const h = document.getElementById(host); h.replaceChildren(); h.classList.toggle("locked", locked);
+        document.getElementById(lockId).textContent = locked ? "Pendant les missions, il change tout seul." : "";
+        items.forEach(([id, name, desc]) => { const b = el("button", st[key] === id ? "on" : ""); b.append(el("b", "", name), desc); b.onclick = () => { if (locked) { track("locked_click", { key }); return; } const prev = st[key]; st[key] = id; track(key, { v: id, from: prev }); controls(); render(); }; h.append(b); });
+    };
+    seg("formats", FORMATS, "format", "lock-f"); seg("modes", MODES, "mode", "lock-m");
+}
+
+/* ---------- BOSS schematic ---------- */
+let flashKey = null;
+function renderBoss() {
+    const b = document.getElementById("boss"); b.replaceChildren();
+    const h = el("div", "bh"); h.append("BOSS", el("small", "", "· schéma simplifié · " + PEOPLE[st.who].name)); b.append(h);
+    const body = el("div", "bb"); const menu = el("div", "bm"); const content = el("div", "bc"); body.append(menu, content); b.append(body);
+    PEOPLE[st.who].data.forEach((g) => { menu.append(el("div", "bg", g.label)); g.sections.forEach((s) => { const it = el("div", "bi" + (s.name === st.boss ? " on" : ""), s.name); it.onclick = () => { st.boss = s.name; track("boss_nav", { to: s.name }); renderBoss(); }; menu.append(it); }); });
+    const sec = flat().find((f) => f.s.name === st.boss); if (!sec) return;
+    content.append(el("div", "bt", sec.s.name)); const grid = el("div", "bf");
+    sec.s.rows.forEach((r) => { const f = el("div", "fl"); f.append(el("label", "", r[0])); const v = el("div", "", r[2]); if (flashKey === sec.s.name + "|" + r[0]) v.classList.add("flash"); f.append(v); grid.append(f); });
+    content.append(grid, el("div", "note", "Schéma pour l'essai : seulement les sections et les cases, pas le vrai écran de BOSS."));
+    flashKey = null;
+}
+
+/* ---------- panel ---------- */
+function copyBtn(value, sec, label) { const b = el("button", "btn", "Copier"); b.onclick = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(value).catch(() => {}); track("action", { a: "copy", sec, label }); b.textContent = "Copié"; setTimeout(() => (b.textContent = "Copier"), 1200); }; return b; }
 function labelText(node, label) { const i = st.q ? norm(label).indexOf(st.q) : -1; if (i < 0) node.append(label); else node.append(label.slice(0, i), el("mark", "", label.slice(i, i + st.q.length)), label.slice(i + st.q.length)); return node; }
 function renderRow(row, sec) {
     const [label, v, b] = row; const k = kind(row); const key = st.who + "|" + sec + "|" + label;
@@ -274,12 +566,12 @@ function renderRow(row, sec) {
     const lab = labelText(el("span", "lab"), label); lab.title = tip; const vals = el("div", "vals");
     r.append(lab, vals);
     const sl = labelText(el("div", "stacklab"), label); sl.title = tip;
-    const toggle = () => { st.open.has(key) ? st.open.delete(key) : st.open.add(key); render(); };
+    const toggle = () => { const opening = !st.open.has(key); opening ? st.open.add(key) : st.open.delete(key); if (opening) onRowClick(sec, label, k); render(); };
     lab.onclick = toggle; vals.onclick = toggle;
     const cols = st.format === "cols" && st.mode > 1;
     if (k === "none") { vals.append(sl, el("div", "val none", "—")); return wrap; }
     if (cols) {
-        const bc = el("div", "bosscell"); if (k === "empty") bc.append(el("span", "vide", "vide")); else bc.append(KEPT.has(row) ? b : b); vals.append(bc, el("div", "val", KEPT.has(row) ? b : v));
+        const bc = el("div", "bosscell"); if (k === "empty") bc.append(el("span", "vide", "vide")); else bc.append(b); vals.append(bc, el("div", "val", KEPT.has(row) ? b : v));
     } else {
         const box = el("div"); box.append(sl);
         if (k === "diff") { const w = el("div", "was", b); w.title = "Valeur actuellement dans BOSS"; box.append(w); }
@@ -288,16 +580,16 @@ function renderRow(row, sec) {
         const multi = MULTI[sec + "|" + label]; if (multi && !KEPT.has(row) && st.who === 0) box.append(el("div", "srcs", multi.length + " sources"));
         vals.append(box);
     }
-    if (k === "plain") r.append(copyBtn(v));
+    if (k === "plain") r.append(copyBtn(v, sec, label));
     else if (k === "same" || k === "kept") { const ok = el("span", "ok", "✓"); ok.title = tip; r.append(ok); }
-    else if (st.mode === 2) r.append(copyBtn(v));
-    else { const a = el("button", "btn go", k === "empty" ? "Remplir" : "Corriger"); a.onclick = (e) => { e.stopPropagation(); row[2] = v; render(); }; r.append(a); }
+    else if (st.mode === 2) r.append(copyBtn(v, sec, label));
+    else { const a = el("button", "btn go", k === "empty" ? "Remplir" : "Corriger"); a.onclick = (e) => { e.stopPropagation(); row[2] = v; track("action", { a: k === "empty" ? "fill" : "fix", sec, label }); st.boss = sec; flashKey = sec + "|" + label; render(); }; r.append(a); }
     if (st.open.has(key)) {
         const d = el("div", "detail"); const multi = st.who === 0 ? MULTI[sec + "|" + label] : null;
-        if (multi && !KEPT.has(row)) { d.append(el("div", "", "Vos documents ne disent pas tous la même chose :")); multi.forEach(([doc, val]) => { const o = el("div", "opt" + (val === row[1] ? " on" : ""), doc + " — " + val); o.onclick = () => { row[1] = val; render(); }; d.append(o); }); }
-        else { const s = el("div"); s.append("Source : " + (DOC[sec] || "Document du dossier") + " · "); const a = el("a", "", "Voir le document"); a.onclick = () => (a.textContent = "(ouvre le PDF à la bonne page)"); s.append(a); d.append(s); }
-        if (k === "diff") { const g = el("div"); const a = el("a", "", "BOSS a raison : garder « " + b + " »"); a.onclick = () => { KEPT.add(row); st.open.delete(key); render(); }; g.append(a); d.append(g); }
-        if (k === "kept") { const g = el("div"); const a = el("a", "", "Revoir cette case"); a.onclick = () => { KEPT.delete(row); render(); }; g.append(a); d.append(g); }
+        if (multi && !KEPT.has(row)) { d.append(el("div", "", "Vos documents ne disent pas tous la même chose :")); multi.forEach(([doc, val]) => { const o = el("div", "opt" + (val === row[1] ? " on" : ""), doc + " — " + val); o.onclick = () => { row[1] = val; track("action", { a: "source", sec, label }); render(); }; d.append(o); }); }
+        else { const s = el("div"); s.append("Source : " + (DOC[sec] || "Document du dossier") + " · "); const a = el("a", "", "Voir le document"); a.onclick = () => { a.textContent = "(ouvre le PDF à la bonne page)"; track("action", { a: "doc", sec, label }); }; s.append(a); d.append(s); }
+        if (k === "diff") { const g = el("div"); const a = el("a", "", "BOSS a raison : garder « " + b + " »"); a.onclick = () => { KEPT.add(row); st.open.delete(key); track("action", { a: "keep", sec, label }); render(); }; g.append(a); d.append(g); }
+        if (k === "kept") { const g = el("div"); const a = el("a", "", "Revoir cette case"); a.onclick = () => { KEPT.delete(row); track("action", { a: "unkeep", sec, label }); render(); }; g.append(a); d.append(g); }
         wrap.append(d);
     }
     return wrap;
@@ -310,20 +602,21 @@ function rowsBox(rows, sec, head) {
     return box;
 }
 function secState(s) { const wd = s.rows.filter(([, v]) => v).length; const td = s.rows.filter(isTodo).length; if (!wd) return ["aucune donnée", ""]; if (st.mode === 1) return [wd + (wd > 1 ? " données" : " donnée"), ""]; return td ? [td + " à traiter", "todo"] : ["✓", ""]; }
-function go(view) { st.view = view; render(); panel.querySelector(".body").scrollTop = 0; }
-let searchBox;
+function go(view, via) { st.view = view; onNav(view, via); render(); const b = panel.querySelector(".body"); if (b) b.scrollTop = 0; }
+let searchBox, searchTimer;
 function render() {
     panel.className = "panel f-" + st.format;
     const keepFocus = document.activeElement === searchBox;
     panel.replaceChildren();
+    renderBoss();
     const head = el("div", "p-head"); const deal = el("div", "deal"); deal.append(el("b", "", "Dossier BOSS #0000001"), PEOPLE[st.who].name); head.append(el("span", "logo", "LC"), deal);
-    const tabs = el("div", "tabs"); ["Informations", "Documents", "Actions"].forEach((t, i) => { const s = el("span", st.tab === i ? "on" : "", t); s.onclick = () => { st.tab = i; render(); }; tabs.append(s); });
+    const tabs = el("div", "tabs"); ["Informations", "Documents", "Actions"].forEach((t, i) => { const s = el("span", st.tab === i ? "on" : "", t); s.onclick = () => { st.tab = i; track("tab", { v: t }); render(); }; tabs.append(s); });
     panel.append(head, tabs);
     if (st.tab) { const b = el("div", "body"); b.append(el("div", "hint", st.tab === 1 ? "Les documents du dossier, classés par LeClasseur. (Pas montré dans cet aperçu.)" : "Les actions du dossier. (Pas montré dans cet aperçu.)")); panel.append(b); return; }
     const tools = el("div", "tools"); const pills = el("div", "pills");
-    ["Demandeur", "Co-demandeur"].forEach((t, i) => { const p = el("span", "pill" + (st.who === i ? " on" : ""), t); p.onclick = () => { st.who = i; render(); }; pills.append(p); });
+    ["Demandeur", "Co-demandeur"].forEach((t, i) => { const p = el("span", "pill" + (st.who === i ? " on" : ""), t); p.onclick = () => { st.who = i; track("who", { v: i }); render(); }; pills.append(p); });
     searchBox = el("input", "search"); searchBox.type = "search"; searchBox.placeholder = "Chercher une case (ex. NAS, code postal, taux)"; searchBox.value = st.qRaw || "";
-    searchBox.oninput = () => { st.qRaw = searchBox.value; st.q = norm(searchBox.value.trim()); render(); };
+    searchBox.oninput = () => { st.qRaw = searchBox.value; st.q = norm(searchBox.value.trim()); clearTimeout(searchTimer); searchTimer = setTimeout(() => st.q && track("search", { q: st.qRaw.slice(0, 40) }), 1200); render(); };
     tools.append(pills, searchBox); panel.append(tools);
     const body = el("div", "body"); panel.append(body);
     if (keepFocus) { searchBox.focus(); searchBox.setSelectionRange(searchBox.value.length, searchBox.value.length); }
@@ -331,7 +624,7 @@ function render() {
     if (st.q) {
         let hits = 0;
         F.forEach(({ s }, idx) => { const m = s.rows.filter(([l, v]) => v && (norm(l).includes(st.q) || norm(v).includes(st.q))); if (!m.length) return; hits += m.length;
-            body.append(rowsBox(m, s.name, { text: s.name, go: () => { st.q = ""; st.qRaw = ""; go({ type: "section", idx }); } })); });
+            body.append(rowsBox(m, s.name, { text: s.name, go: () => { st.q = ""; st.qRaw = ""; go({ type: "section", idx }, "search"); } })); });
         if (!hits) body.append(el("div", "hint", "Aucune case trouvée."));
         return;
     }
@@ -339,41 +632,114 @@ function render() {
         if (st.help) {
             const h = el("div", "help");
             h.innerHTML = "<b>Comment lire ce panneau</b><br>Le menu est le même que celui de BOSS. Cliquez une section pour voir ses cases." + (st.mode > 1 ? "<br><span class='mk g'></span> pareil dans BOSS · <span class='mk d'></span> différent · <span class='mk e'></span> vide dans BOSS" : "") + "<br>Cliquez une case pour voir de quel document elle vient.";
-            const x = el("span", "x", "Compris"); x.onclick = () => { st.help = false; render(); }; h.append(x); body.append(h);
+            const x = el("span", "x", "Compris"); x.onclick = () => { st.help = false; track("help", { v: 0 }); render(); }; h.append(x); body.append(h);
         }
-        if (st.mode > 1) { const n = F.reduce((a, { s }) => a + s.rows.filter(isTodo).length, 0); const c = el("div", "todo-card"); c.append(el("span", "t", "À traiter"), el("span", "n", String(n)), el("span", "chev", "›")); c.onclick = () => go({ type: "todo" }); body.append(c); }
+        if (st.mode > 1) { const n = F.reduce((a, { s }) => a + s.rows.filter(isTodo).length, 0); const c = el("div", "todo-card"); c.append(el("span", "t", "À traiter"), el("span", "n", String(n)), el("span", "chev", "›")); c.onclick = () => go({ type: "todo" }, "menu"); body.append(c); }
         PEOPLE[st.who].data.forEach((g) => {
             body.append(el("div", "group-label", g.label)); const list = el("div", "list");
-            g.sections.forEach((s) => { const [txt, c] = secState(s); const idx = F.findIndex((f) => f.s === s); const it = el("div", "item" + (txt === "aucune donnée" ? " empty" : "")); it.append(el("span", "name", s.name), el("span", "state " + c, txt), el("span", "chev", "›")); it.onclick = () => go({ type: "section", idx }); list.append(it); });
+            g.sections.forEach((s) => { const [txt, c] = secState(s); const idx = F.findIndex((f) => f.s === s); const it = el("div", "item" + (txt === "aucune donnée" ? " empty" : "")); it.append(el("span", "name", s.name), el("span", "state " + c, txt), el("span", "chev", "›")); it.onclick = () => go({ type: "section", idx }, "menu"); list.append(it); });
             body.append(list);
         });
-        if (!st.help) { const hl = el("div", "helplink", "Comment lire ce panneau ?"); hl.onclick = () => { st.help = true; render(); }; body.append(hl); }
+        if (!st.help) { const hl = el("div", "helplink", "Comment lire ce panneau ?"); hl.onclick = () => { st.help = true; track("help", { v: 1 }); render(); }; body.append(hl); }
         return;
     }
-    const bar = el("div", "bar"); const back = el("span", "back", "‹ Menu"); back.onclick = () => go({ type: "menu" }); bar.append(back);
+    const bar = el("div", "bar"); const back = el("span", "back", "‹ Menu"); back.onclick = () => go({ type: "menu" }, "back"); bar.append(back);
     if (st.view.type === "todo") {
         bar.append(el("span", "title", "À traiter"), el("span", "nav")); body.append(bar); let any = false;
-        F.forEach(({ s }, idx) => { const m = s.rows.filter(isTodo); if (!m.length) return; any = true; body.append(rowsBox(m, s.name, { text: s.name, go: () => go({ type: "section", idx }) })); });
+        F.forEach(({ s }, idx) => { const m = s.rows.filter(isTodo); if (!m.length) return; any = true; body.append(rowsBox(m, s.name, { text: s.name, go: () => go({ type: "section", idx }, "todo") })); });
         if (!any) body.append(el("div", "hint", st.mode === 1 ? "Disponible quand le panneau compare avec BOSS." : "Tout concorde avec BOSS. Rien à traiter."));
         return;
     }
     const idx = Math.min(st.view.idx, F.length - 1); const { s } = F[idx];
     const nav = el("span", "nav"); const p = el("span", idx ? "" : "off", "‹"); const n = el("span", idx < F.length - 1 ? "" : "off", "›");
-    p.onclick = () => go({ type: "section", idx: idx - 1 }); n.onclick = () => go({ type: "section", idx: idx + 1 }); nav.append(p, n);
+    p.onclick = () => go({ type: "section", idx: idx - 1 }, "arrow"); n.onclick = () => go({ type: "section", idx: idx + 1 }, "arrow"); nav.append(p, n);
     bar.append(el("span", "title", s.name), nav); body.append(bar);
     const key = st.who + "|" + idx; const all = st.showNone.has(key); const shown = s.rows.filter(([, v]) => v || all); const nd = s.rows.filter(([, v]) => !v).length;
     if (shown.length) body.append(rowsBox(shown, s.name)); else body.append(el("div", "hint", "Aucune donnée pour cette section."));
     if (s.name === "Emplois" && st.who === 0) {
-        const c = el("div", "income"); const top = el("div", "top"); top.append(el("b", "", "Revenu retenu : 68 400 $ / an")); const a = el("a", "", st.income ? "Masquer le calcul" : "Voir le calcul"); a.onclick = () => { st.income = !st.income; render(); }; top.append(a); c.append(top);
+        const c = el("div", "income"); const top = el("div", "top"); top.append(el("b", "", "Revenu retenu : 68 400 $ / an")); const a = el("a", "", st.income ? "Masquer le calcul" : "Voir le calcul"); a.onclick = () => { st.income = !st.income; track("action", { a: "income", v: st.income ? 1 : 0 }); render(); }; top.append(a); c.append(top);
         if (st.income) { const k = el("div", "calc"); ["Talon de paie oct. 2026 : 2 630,77 $ aux 2 semaines × 26 = 68 400 $", "T4 2025 : 66 900 $", "Lettre d'emploi : 68 000 $ / an", "Retenu : salaire de base du talon le plus récent"].forEach((l) => k.append(el("div", "", l))); c.append(k); }
         body.append(c);
     }
     const foot = el("div", "foot"); const more = el("span", "", nd ? (all ? "Masquer les cases sans donnée" : "+ " + nd + (nd > 1 ? " cases sans donnée" : " case sans donnée")) : "");
-    more.onclick = () => { all ? st.showNone.delete(key) : st.showNone.add(key); render(); }; foot.append(more);
-    const td = s.rows.filter(isTodo); if (st.mode === 3 && td.length > 1) { const fa = el("span", "act", "Remplir la section (" + td.length + ")"); fa.onclick = () => { s.rows.forEach((r) => { if (r[1] && !KEPT.has(r)) r[2] = r[1]; }); render(); }; foot.append(fa); }
+    more.onclick = () => { all ? st.showNone.delete(key) : st.showNone.add(key); track("action", { a: "shownone", v: all ? 0 : 1 }); render(); }; foot.append(more);
+    const td = s.rows.filter(isTodo); if (st.mode === 3 && td.length > 1) { const fa = el("span", "act", "Remplir la section (" + td.length + ")"); fa.onclick = () => { s.rows.forEach((r) => { if (r[1] && !KEPT.has(r)) r[2] = r[1]; }); track("action", { a: "fillsection", sec: s.name, n: td.length }); st.boss = s.name; render(); }; foot.append(fa); }
     body.append(foot);
 }
-controls(); render();
+
+/* ---------- intro & avis ---------- */
+function openModal(id, why) { document.getElementById(id).classList.add("on"); track(id + "_open", { why }); }
+function closeModal(id, why) { document.getElementById(id).classList.remove("on"); track(id + "_close", { why }); }
+document.getElementById("btn-intro").onclick = () => openModal("intro", "button");
+document.getElementById("go-missions").onclick = () => { store.set("lc_intro_seen", 1); closeModal("intro", "missions"); startSeries(); };
+document.getElementById("go-free").onclick = () => { store.set("lc_intro_seen", 1); closeModal("intro", "free"); renderMission(); };
+document.getElementById("btn-avis").onclick = () => openAvis("top");
+document.getElementById("avis-close").onclick = () => closeModal("avis", "close");
+const form = document.getElementById("avis-form");
+function choiceGroup(host, name, items, required) {
+    const h = document.getElementById(host);
+    items.forEach(([v, label], i) => { const l = el("label"); const inp = el("input"); inp.type = "radio"; inp.name = name; inp.value = v; if (required && i === 0) inp.required = true; l.append(inp, label); h.append(l); });
+}
+choiceGroup("q-pref", "pref", FORMATS.map(([id, n]) => [id, n]), true);
+choiceGroup("q-least", "least", FORMATS.map(([id, n]) => [id, n]).concat([["aucun", "Aucun"]]), false);
+choiceGroup("q-color", "color", THEMES.map(([id, n]) => [id, n]).concat([["egal", "Ça m'est égal"]]), false);
+choiceGroup("q-role", "role", ROLES, true);
+(function scale() {
+    const h = document.getElementById("q-scale");
+    STATEMENTS.forEach(([k, txt]) => { h.append(el("span", "", txt)); const d = el("div", "dots"); for (let i = 1; i <= 5; i++) { const l = el("label"); const inp = el("input"); inp.type = "radio"; inp.name = "r_" + k; inp.value = i; l.append(inp, String(i)); d.append(l); } h.append(d); });
+    const lg = el("div", "legend"); lg.append(el("span", "", "pas du tout"), el("span", "", "tout à fait")); h.append(el("span"), lg);
+})();
+function fillForm(v) {
+    if (!v) return;
+    const set = (name, val) => { if (val === undefined || val === "") return; const i = form.querySelector('input[name="' + name + '"][value="' + val + '"]'); if (i) i.checked = true; };
+    set("pref", v.pref); set("least", v.least); set("color", v.color); set("role", v.role);
+    Object.entries(v.ratings || {}).forEach(([k, n]) => set("r_" + k, n));
+    form.comment.value = v.comment || ""; form.elements.name.value = v.name || "";
+}
+function readForm() {
+    const val = (n) => (form.querySelector('input[name="' + n + '"]:checked') || {}).value || "";
+    const ratings = {}; STATEMENTS.forEach(([k]) => { const r = val("r_" + k); if (r) ratings[k] = Number(r); });
+    return { pref: val("pref"), least: val("least"), color: val("color"), role: val("role"), ratings, comment: form.comment.value.trim().slice(0, 2000), name: form.elements.name.value.trim().slice(0, 60) };
+}
+function openAvis(why) {
+    fillForm(store.get("lc_vote", null));
+    const s = document.getElementById("avis-status");
+    s.className = "status"; s.textContent = store.get("lc_vote", null) ? "Vous avez déjà donné votre avis. Vous pouvez le modifier ici." : "";
+    openModal("avis", why);
+}
+const votePayload = (v, extra) => JSON.stringify(Object.assign({ v: 1, visitor: VISITOR, session: SESSION, vote: v, missions: (ms && ms.results) || [], order: (ms && ms.order) || [] }, extra || {}));
+form.onsubmit = async (e) => {
+    e.preventDefault();
+    const v = readForm(); const s = document.getElementById("avis-status");
+    store.set("lc_vote", v); track("vote_submit", { pref: v.pref });
+    s.className = "status"; s.textContent = "Enregistrement…";
+    try {
+        if (!API) throw new Error("no api");
+        const r = await post("/api/vote", votePayload(v));
+        s.className = "status good"; s.textContent = r.updated ? "Avis modifié ✓ Merci ! C'est votre dernier choix qui compte." : "Avis enregistré ✓ Merci ! Vous pouvez revenir le modifier en tout temps.";
+        store.set("lc_vote_pending", null);
+    } catch (err) {
+        store.set("lc_vote_pending", 1);
+        s.className = "status bad"; s.textContent = "Pas de connexion pour l'instant. Votre avis est gardé sur cet appareil et sera envoyé automatiquement à votre prochaine visite.";
+    }
+    flush(false);
+};
+async function retryPendingVote() {
+    if (!API || !store.get("lc_vote_pending", null)) return;
+    const v = store.get("lc_vote", null); if (!v) return;
+    try { await post("/api/vote", votePayload(v, { retried: true })); store.set("lc_vote_pending", null); } catch (e) {}
+}
+async function loadServerVote() {
+    if (!API || store.get("lc_vote", null)) return;
+    try { const r = await fetch(API + "/api/vote?visitor=" + encodeURIComponent(VISITOR)); if (r.ok) { const j = await r.json(); if (j && j.vote) store.set("lc_vote", j.vote); } } catch (e) {}
+}
+
+/* ---------- boot ---------- */
+let refHost = ""; try { refHost = document.referrer ? new URL(document.referrer).hostname : ""; } catch (e) {}
+track("load", { returning: !!store.get("lc_intro_seen", 0), voted: !!store.get("lc_vote", null), missions: ms && ms.results ? ms.results.length : 0, ref: refHost });
+controls(); render(); renderMission();
+if (!store.get("lc_intro_seen", 0)) openModal("intro", "first");
+retryPendingVote(); loadServerVote(); flush(false);
 </script>
 </body>
 </html>
